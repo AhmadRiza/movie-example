@@ -121,19 +121,16 @@ dependencies {
     // UI
     implementation(libs.appcompat)
     implementation(libs.fragment.ktx)
-    implementation(libs.google.material)
 
     // Compose
+    implementation(platform(libs.compose.bom))
     implementation(libs.compose.ui)
-    implementation(libs.compose.material)
+    implementation(libs.compose.material3)
+    implementation(libs.compose.foundation)
     implementation(libs.compose.ui.tooling.preview)
-    implementation(libs.compose.activity)
-    implementation(libs.compose.coil)
-    implementation(libs.compose.runtime)
     implementation(libs.compose.constraintlayout)
+    implementation(libs.compose.coil)
     debugImplementation(libs.compose.ui.tooling)
-    implementation(libs.compose.accompanist.placeholder)
-
     implementation(libs.android.core)
     implementation(libs.android.core.ktx)
 

@@ -22,4 +22,5 @@ pluginManagement {
 
 include(
     ":app", ":core:network", ":core:cache", ":core:common",  ":core:common-ui",
+    ":auth:ui"
 )
