@@ -1,0 +1,203 @@
+#Default libs catalog
+
+[versions]
+androidBuildTools = "32.0.0"
+androidMinSdk = "21"
+androidTargetSdk = "31"
+androidCompileSdk = "32"
+
+# Kotlin
+kotlin = "1.7.10"
+coroutines = "1.6.4"
+kotlinDateTime = "0.4.0"
+
+# Gradle plugins
+# Make sure to update settings.gradle.kts when updating androidGradlePlugin
+androidGradlePlugin = "7.2.2"
+androidCacheFix = "2.5.6"
+testRetry = "1.4.0"
+
+# Core
+javaxAnnotation = "1.2.0"
+javaxInject = "1"
+gson = "2.9.1"
+okHttp = "4.10.0"
+retrofit = "2.9.0"
+
+# DI
+dagger = "2.43.2"
+anvil = "2.4.1"
+
+# Jetpack
+androidAnnotations = "1.4.0"
+appCompat = "1.4.2"
+constraintLayout = "2.1.4"
+androidCore = "1.8.0"
+googleMaterial = "1.6.1"
+fragment = "1.4.0"
+lifecycle = "2.5.1"
+room = "2.4.3"
+cardView = "1.0.0"
+localBroadcastManager = "1.1.0"
+compose = "1.2.1"
+composeCompiler = "1.2.1-dev-k1.7.10-27cf0868d10"
+composeActivity = "1.4.0"
+constraintLayoutCompose = "1.0.1"
+composeBom = "2023.06.01"
+# Jetpack Compose Supports
+coil = "2.1.0"
+accompanist = "0.25.1"
+
+# Testing
+archCoreTesting = "2.1.0"
+jUnit = "4.13.2"
+androidxTest = "1.4.0"
+androidxJUnit = "1.1.3"
+espresso = "3.4.0"
+mockk = "1.12.5"
+dexMaker = "2.28.3"
+barista = "4.2.0"
+kotest = "5.4.2"
+
+# Code Analysis
+ktlintGradle = "10.3.0"
+detekt = "1.21.0"
+
+# Code Coverage
+sonarcube = "2.7"
+jacoco = "0.8.8"
+
+# Utility
+chucker = "3.5.2"
+leakCanary = "2.9.1"
+doctorPlugin = "0.8.1"
+affectedmoduledetector = "0.1.6"
+ruler = "1.3.0"
+
+# Build tool
+# This lib is used to make sure we can use Time API in older android version
+# that still run on jdk 8
+desugarJdkLibs = "1.1.5"
+
+[libraries]
+# Kotlin
+kotlin = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
+kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
+kotlin-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
+kotlin-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinDateTime" }
+
+#Coroutine
+coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
+coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
+coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
+
+javax-annotation = { module = "javax.annotation:jsr250-api", version.ref = "javaxAnnotation" }
+javax-inject = { module = "javax.inject:javax.inject", version.ref = "javaxInject" }
+
+# Network
+gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
+okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okHttp" }
+okhttp-logging = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okHttp" }
+okhttp-mockwebserver = { module = "com.squareup.okhttp3:mockwebserver", version.ref = "okHttp" }
+retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+retrofit-converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
+
+# DI
+dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
+dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "dagger" }
+
+# AndroidX
+android-annotations = { module = "androidx.annotation:annotation", version.ref = "androidAnnotations" }
+appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appCompat" }
+google-material = { module = "com.google.android.material:material", version.ref = "googleMaterial" }
+
+localbroadcastmanager = { module = "androidx.localbroadcastmanager:localbroadcastmanager", version.ref = "localBroadcastManager" }
+android-core = { module = "androidx.core:core", version.ref = "androidCore" }
+android-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidCore" }
+fragment = { module = "androidx.fragment:fragment", version.ref = "fragment" }
+fragment-ktx = { module = "androidx.fragment:fragment-ktx", version.ref = "fragment" }
+fragment-testing = { module = "androidx.fragment:fragment-testing", version.ref = "fragment" }
+
+# Lifecycle
+lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle" }
+lifecycle-extensions = { module = "androidx.lifecycle:lifecycle-extensions", version.ref = "lifecycle" }
+lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel", version.ref = "lifecycle" }
+lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
+lifecycle-compiler = { module = "androidx.lifecycle:lifecycle-compiler", version.ref = "lifecycle" }
+lifecycle-livedata-core = { module = "androidx.lifecycle:lifecycle-livedata-core", version.ref = "lifecycle" }
+lifecycle-livedata-core-ktx = { module = "androidx.lifecycle:lifecycle-livedata-core-ktx", version.ref = "lifecycle" }
+lifecycle-livedata-ktx = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "lifecycle" }
+lifecycle-common-java = { module = "androidx.lifecycle:lifecycle-common-java8", version.ref = "lifecycle" }
+
+# Room
+room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
+room-testing = { module = "androidx.room:room-testing", version.ref = "room" }
+
+# Jetpack Compose
+compose-activity = { module = "androidx.activity:activity-compose", version.ref = "composeActivity" }
+compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
+compose-ui = { module = "androidx.compose.ui:ui" }
+compose-foundation = { module = "androidx.compose.foundation:foundation" }
+compose-material = { module = "androidx.compose.material:material" }
+compose-material3 = { module = "androidx.compose.material3:material3" }
+compose-runtime = { module = "androidx.compose.runtime:runtime-livedata" }
+compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
+compose-google-fonts = { module = "androidx.compose.ui:ui-text-google-fonts" }
+compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
+compose-coil = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
+compose-constraintlayout = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "constraintLayoutCompose" }
+compose-runtime-livedata = { module = "androidx.compose.runtime:runtime-livedata" }
+compose-accompanist-placeholder = { module = "com.google.accompanist:accompanist-placeholder-material", version.ref = "accompanist" }
+compose-accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist" }
+compose-accompanist-swiperefresh = { module = "com.google.accompanist:accompanist-swiperefresh", version.ref = "accompanist" }
+compose-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4" }
+compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
+
+
+# Testing
+arch-core-testing = { module = "androidx.arch.core:core-testing", version.ref = "archCoreTesting" }
+junit = { module = "junit:junit", version.ref = "jUnit" }
+test-runner = { module = "androidx.test:runner", version.ref = "androidxTest" }
+test-rules = { module = "androidx.test:rules", version.ref = "androidxTest" }
+test-core = { module = "androidx.test:core", version.ref = "androidxTest" }
+test-junit-ktx = { module = "androidx.test.ext:junit-ktx", version.ref = "androidxJUnit" }
+espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espresso" }
+espresso-intents = { module = "androidx.test.espresso:espresso-intents", version.ref = "espresso" }
+espresso-contrib = { module = "androidx.test.espresso:espresso-contrib", version.ref = "espresso" }
+espresso-indling-resource = { module = "androidx.test.espresso:espresso-idling-resource", version.ref = "espresso" }
+mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+mockk-android = { module = "io.mockk:mockk-android", version.ref = "mockk" }
+dexmaker = { module = "com.linkedin.dexmaker:dexmaker", version.ref = "dexMaker" }
+barista = { module = "com.adevinta.android:barista", version.ref = "barista" }
+kotest-runner-junit5 = {module = "io.kotest:kotest-runner-junit5", version.ref = "kotest"}
+kotest-assertions = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
+
+# Debug libs
+chucker = { module = "com.github.ChuckerTeam.Chucker:library", version.ref = "chucker" }
+chucker-noop = { module = "com.github.ChuckerTeam.Chucker:library-no-op", version.ref = "chucker" }
+leakcanary = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakCanary" }
+
+# Build tools
+
+desugar = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugarJdkLibs" }
+
+# Classpath plugin
+
+classpath-android-gradle = { module = "com.android.tools.build:gradle", version.ref = "androidGradlePlugin" }
+classpath-kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+classpath-kotlin-allopen = { module = "org.jetbrains.kotlin:kotlin-allopen", version.ref = "kotlin" }
+classpath-kotlin-serialization = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlin" }
+classpath-ktlint-gradle = { module = "org.jlleitschuh.gradle:ktlint-gradle", version.ref = "ktlintGradle" }
+classpath-jacoco-core = { module = "org.jacoco:org.jacoco.core", version.ref = "jacoco" }
+classpath-spotify-ruler = { module = "com.spotify.ruler:ruler-gradle-plugin", version.ref = "ruler" }
+classpath-doctor = { module = "com.osacky.doctor:doctor-plugin", version.ref = "doctorPlugin" }
+
+[plugins]
+doctor = { id = "com.osacky.doctor", version.ref = "doctorPlugin" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlintGradle" }
+test-retry = { id = "org.gradle.test-retry", version.ref = "testRetry" }
+cache-fix = { id = "org.gradle.android.cache-fix", version.ref = "androidCacheFix" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+anvil = { id = "com.squareup.anvil", version.ref = "anvil" }

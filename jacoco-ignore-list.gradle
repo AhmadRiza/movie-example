@@ -1,0 +1,6 @@
+ext {
+    // put module path here (e.g :Kbpl:Playground) not just its name (e.g Playground)
+    jacocoIgnoreList = [
+            ":cache"
+    ]
+}
