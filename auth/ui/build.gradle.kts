@@ -1,7 +1,12 @@
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     id("com.android.library")
     kotlin("android")
+    kotlin("kapt")
     id("com.riza.example.module")
+    id("com.riza.example.kapt")
+    id("com.riza.example.dagger.kapt")
+    alias(libs.plugins.anvil)
 }
 
 android {
@@ -25,8 +30,7 @@ android {
 dependencies {
     implementation(project(":core:common"))
     implementation(project(":core:common-ui"))
-    implementation(project(":core:cache"))
-    implementation(project(":core:network"))
+    implementation(project(":auth:api"))
 
     implementation(libs.kotlin)
     implementation(libs.android.core)
@@ -41,5 +45,10 @@ dependencies {
     implementation(libs.compose.ui.tooling.preview)
     implementation(libs.compose.constraintlayout)
     implementation(libs.compose.coil)
+    implementation(libs.compose.activity)
     debugImplementation(libs.compose.ui.tooling)
+
+    implementation(libs.javax.inject)
+    implementation(libs.dagger)
+    kapt(libs.dagger.compiler)
 }
