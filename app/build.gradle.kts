@@ -114,9 +114,9 @@ android {
 }
 
 dependencies {
-    implementation(project(":common"))
-    implementation(project(":cache"))
-    implementation(project(":network"))
+    implementation(project(":core:common"))
+    implementation(project(":core:cache"))
+    implementation(project(":core:network"))
 
     // UI
     implementation(libs.appcompat)

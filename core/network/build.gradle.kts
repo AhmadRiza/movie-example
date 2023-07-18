@@ -13,7 +13,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":common"))
+    implementation(project(":core:common"))
 
     implementation(libs.kotlin)
     implementation(libs.coroutines.core)

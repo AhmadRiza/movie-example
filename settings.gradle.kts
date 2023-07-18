@@ -1,6 +1,6 @@
 import java.net.URI
 
-rootProject.name = "Verification Example"
+rootProject.name = "verification-form"
 
 pluginManagement {
     includeBuild("./module-plugins")
@@ -21,5 +21,5 @@ pluginManagement {
 }
 
 include(
-    ":app", ":network", ":cache", ":common",
+    ":app", ":core:network", ":core:cache", ":core:common",  ":core:common-ui",
 )
