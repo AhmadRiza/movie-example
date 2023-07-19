@@ -5,12 +5,13 @@ import com.riza.example.router.NavigationRouterImpl
 import com.riza.example.cache.di.CacheComponentHolder
 import com.riza.example.common.di.CoreComponentHolder
 import com.riza.example.network.NetworkComponentHolder
+import com.riza.example.publiccomponent.PublicComponentFactoryRegistry
 
 /**
  * Created by ahmadriza on 15/08/22.
  * Copyright (c) 2022 Kitabisa. All rights reserved.
  */
-class GithubCatalogApp : Application() {
+class MyApp : Application() {
 
     override fun onCreate() {
         configureCoreComponents()
@@ -28,5 +29,6 @@ class GithubCatalogApp : Application() {
             applicationContext = this,
             githubToken = "token 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"
         )
+        PublicComponentFactoryRegistry.registerPublicComponent()
     }
 }

@@ -11,7 +11,6 @@ repositories {
 dependencies {
     implementation(libs.classpath.android.gradle)
     implementation(libs.classpath.kotlin.gradle)
-    // implementation(libs.classpath.ksp.gradle)
 }
 
 gradlePlugin {

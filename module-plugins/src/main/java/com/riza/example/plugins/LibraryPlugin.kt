@@ -12,21 +12,24 @@ import org.gradle.kotlin.dsl.get
 import org.gradle.kotlin.dsl.getByType
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions
 
+@Suppress("UnstableApiUsage")
 class LibraryPlugin : Plugin<Project> {
 
     override fun apply(project: Project) {
         val androidPlugin = project.androidPlugin()
             ?: error(
                 "Plugin must be applied after applying the application, " +
-                    "library, or dynamic-feature Android plugin"
+                        "library, or dynamic-feature Android plugin"
             )
+
+        project.plugins.apply("org.gradle.android.cache-fix")
 
         val versionCatalog = project.extensions.getByType<VersionCatalogsExtension>()
             .named("libs")
 
         when (androidPlugin) {
             is AndroidPlugin.App -> {
-                /** TODO */
+                /* TODO */
             }
             is AndroidPlugin.DynamicFeature -> {
                 configureDynamicFeature(androidPlugin.androidExtension, versionCatalog, project)
@@ -54,7 +57,7 @@ class LibraryPlugin : Plugin<Project> {
                 getByName("debug") {
                     // Run jacocoTestReport with `enableCoverage` property,
                     // e.g ./gradlew [module]:jacocoTestReport -PenableCoverage
-                    isTestCoverageEnabled = project.hasProperty("enableCoverage")
+                    enableUnitTestCoverage = project.hasProperty("enableCoverage")
                 }
             }
 
@@ -62,29 +65,31 @@ class LibraryPlugin : Plugin<Project> {
                 checkReleaseBuilds = false
                 abortOnError = false
                 disable.add("NullSafeMutableLiveData")
+                ignoreTestSources = true
             }
 
             compileOptions {
-                sourceCompatibility = JavaVersion.VERSION_11
-                targetCompatibility = JavaVersion.VERSION_11
+                sourceCompatibility = JavaVersion.VERSION_17
+                targetCompatibility = JavaVersion.VERSION_17
             }
 
             (this as ExtensionAware).extensions.configure<KotlinJvmOptions>("kotlinOptions") {
-                jvmTarget = "11"
+                jvmTarget = "17"
                 freeCompilerArgs = freeCompilerArgs + listOf(
-                    "-opt-in=kotlin.time.ExperimentalTime"
+                    "-opt-in=kotlin.time.ExperimentalTime",
+                    "-P",
+                    "plugin:androidx.compose.compiler.plugins.kotlin:suppressKotlinVersionCompatibilityCheck=true",
                 )
             }
 
-            // This part will solve missing coverage, cov become 0%
-            // issue https://example.com/jacoco/jacoco/issues/996
-            if (project.hasProperty("enableCoverage")) {
-                sourceSets {
-                    sourceSets["test"].java.srcDirs(
-                        "${project.projectDir}/src/test/java",
-                        "${project.projectDir}/src/main/java"
+            packagingOptions {
+                resources.excludes.addAll(
+                    listOf(
+                        "META-INF/AL2.0",
+                        "META-INF/LGPL2.1",
+                        "*.kotlin_module"
                     )
-                }
+                )
             }
         }
     }
@@ -107,7 +112,7 @@ class LibraryPlugin : Plugin<Project> {
                 getByName("debug") {
                     // Run jacocoTestReport with `enableCoverage` property,
                     // e.g ./gradlew [module]:jacocoTestReport -PenableCoverage
-                    isTestCoverageEnabled = project.hasProperty("enableCoverage")
+                    enableUnitTestCoverage = project.hasProperty("enableCoverage")
                 }
             }
 
@@ -115,29 +120,31 @@ class LibraryPlugin : Plugin<Project> {
                 checkReleaseBuilds = false
                 abortOnError = false
                 disable.add("NullSafeMutableLiveData")
+                ignoreTestSources = true
             }
 
             compileOptions {
-                sourceCompatibility = JavaVersion.VERSION_11
-                targetCompatibility = JavaVersion.VERSION_11
+                sourceCompatibility = JavaVersion.VERSION_17
+                targetCompatibility = JavaVersion.VERSION_17
             }
 
             kotlinOptions {
-                jvmTarget = "11"
+                jvmTarget = "17"
                 freeCompilerArgs = freeCompilerArgs + listOf(
-                    "-opt-in=kotlin.time.ExperimentalTime"
+                    "-opt-in=kotlin.time.ExperimentalTime",
+                    "-P",
+                    "plugin:androidx.compose.compiler.plugins.kotlin:suppressKotlinVersionCompatibilityCheck=true",
                 )
             }
 
-            // This part will solve missing coverage, cov become 0%
-            // issue https://example.com/jacoco/jacoco/issues/996
-            if (project.hasProperty("enableCoverage")) {
-                sourceSets {
-                    sourceSets["test"].java.srcDirs(
-                        "${project.projectDir}/src/test/java",
-                        "${project.projectDir}/src/main/java"
+            packagingOptions {
+                resources.excludes.addAll(
+                    listOf(
+                        "META-INF/AL2.0",
+                        "META-INF/LGPL2.1",
+                        "*.kotlin_module"
                     )
-                }
+                )
             }
         }
     }

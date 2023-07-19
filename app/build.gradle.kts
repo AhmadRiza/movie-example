@@ -6,6 +6,7 @@ plugins {
     kotlin("android")
     kotlin("kapt")
     id("kotlin-parcelize")
+    id("com.riza.example.module")
     id("com.riza.example.kapt")
     id("com.riza.example.dagger.kapt")
     alias(libs.plugins.anvil)
@@ -95,12 +96,12 @@ android {
 
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "17"
     }
 
     packagingOptions {
@@ -117,10 +118,14 @@ dependencies {
     implementation(project(":core:common"))
     implementation(project(":core:cache"))
     implementation(project(":core:network"))
+    implementation(project(":core:public-component"))
+    implementation(project(":auth:api"))
 
     // UI
     implementation(libs.appcompat)
     implementation(libs.fragment.ktx)
+
+    implementation(libs.android.splashscreen)
 
     // Compose
     implementation(platform(libs.compose.bom))

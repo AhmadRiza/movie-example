@@ -16,8 +16,10 @@ buildscript {
         classpath(libs.classpath.kotlin.gradle)
         classpath(libs.classpath.kotlin.serialization)
         classpath(libs.classpath.kotlin.allopen)
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.10")
-
+        classpath(libs.classpath.kotlin.gradle)
+    }
+    configurations.classpath {
+        resolutionStrategy.activateDependencyLocking()
     }
 }
 
@@ -51,8 +53,14 @@ configurations.all {
                 else -> {}
             }
         }
+        activateDependencyLocking()
     }
 }
+
+dependencyLocking {
+    lockAllConfigurations()
+}
+
 
 // Setup Gradle Doctor
 doctor {
@@ -83,12 +91,7 @@ subprojects {
 
     tasks.withType<KotlinCompile>().configureEach {
         kotlinOptions {
-            jvmTarget = "11"
-            freeCompilerArgs = freeCompilerArgs + listOf(
-                "-P",
-                "plugin:androidx.compose.compiler.plugins.kotlin:suppressKotlinVersionCompatibilityCheck=true",
-                // "-Xuse-k2"
-            )
+            jvmTarget = "17"
         }
     }
 
