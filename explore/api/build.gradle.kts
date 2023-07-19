@@ -5,11 +5,13 @@ plugins {
 }
 
 android {
-    namespace = "com.riza.example.publiccomponent"
+    namespace = "com.riza.example.explore.api"
+
 }
 
 dependencies {
     implementation(project(":core:common"))
-    implementation(project(":explore:ui"))
+
     implementation(libs.kotlin)
+    implementation(libs.android.annotations)
 }

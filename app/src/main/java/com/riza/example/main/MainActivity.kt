@@ -3,8 +3,8 @@ package com.riza.example.main
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import com.riza.example.auth.navigator.AuthNavigator
 import com.riza.example.di.buildAppComponent
+import com.riza.example.explore.navigator.ExploreNavigator
 import javax.inject.Inject
 
 /**
@@ -13,7 +13,7 @@ import javax.inject.Inject
 class MainActivity: AppCompatActivity() {
 
     @Inject
-    lateinit var authNavigator: AuthNavigator
+    lateinit var exploreNavigator: ExploreNavigator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val splashScreen = installSplashScreen()
@@ -23,7 +23,7 @@ class MainActivity: AppCompatActivity() {
 
         // Keep the splash screen visible for this Activity
         splashScreen.setKeepOnScreenCondition { true }
-        startActivity(authNavigator.getRegisterIntent(this))
+        startActivity(exploreNavigator.getGenresIntent(this))
         finish()
     }
 

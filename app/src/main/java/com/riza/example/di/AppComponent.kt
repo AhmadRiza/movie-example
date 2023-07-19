@@ -1,9 +1,9 @@
 package com.riza.example.di
 
-import com.riza.example.auth.di.AuthApiComponent
-import com.riza.example.auth.di.AuthApiComponentHolder
 import com.riza.example.common.di.CoreComponent
 import com.riza.example.common.di.CoreComponentHolder
+import com.riza.example.explore.di.ExploreApiComponent
+import com.riza.example.explore.di.ExploreApiComponentHolder
 import com.riza.example.main.MainActivity
 import dagger.Component
 
@@ -11,7 +11,7 @@ import dagger.Component
 @Component(
     dependencies = [
         CoreComponent::class,
-        AuthApiComponent::class
+        ExploreApiComponent::class
     ],
     modules = [AppViewModelModule::class]
 )
@@ -22,6 +22,6 @@ interface AppComponent {
 fun buildAppComponent(): AppComponent {
     return DaggerAppComponent.builder()
         .coreComponent(CoreComponentHolder.coreComponent)
-        .authApiComponent(AuthApiComponentHolder.authApiComponent)
+        .exploreApiComponent(ExploreApiComponentHolder.exploreApiComponent)
         .build()
 }

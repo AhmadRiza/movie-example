@@ -119,7 +119,7 @@ dependencies {
     implementation(project(":core:cache"))
     implementation(project(":core:network"))
     implementation(project(":core:public-component"))
-    implementation(project(":auth:api"))
+    implementation(project(":explore:api"))
 
     // UI
     implementation(libs.appcompat)
