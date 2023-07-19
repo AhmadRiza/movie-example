@@ -1,6 +1,5 @@
-import java.net.URI
 
-rootProject.name = "verification-form"
+rootProject.name = "movie-example"
 
 pluginManagement {
     includeBuild("./module-plugins")
