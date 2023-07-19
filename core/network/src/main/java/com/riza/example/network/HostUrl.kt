@@ -5,5 +5,5 @@ package com.riza.example.network
  * Copyright (c) 2022 Kitabisa. All rights reserved.
  */
 object HostUrl {
-    const val GITHUB_BASE_URL = "https://api.github.com/"
+    const val TMDB_BASE_URL = "https://api.themoviedb.org/3/"
 }

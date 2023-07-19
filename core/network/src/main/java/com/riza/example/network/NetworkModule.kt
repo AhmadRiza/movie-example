@@ -72,12 +72,12 @@ class NetworkModule(
 
     @Provides
     @NetworkScope
-    @Named("github-retrofit")
+    @Named("explore-retrofit")
     fun provideGithubRetrofit(
         okHttpClient: OkHttpClient,
         gson: Gson,
     ): Retrofit {
-        val baseUrl = HostUrl.GITHUB_BASE_URL
+        val baseUrl = HostUrl.TMDB_BASE_URL
         return Retrofit.Builder()
             .baseUrl(baseUrl)
             .client(okHttpClient)
