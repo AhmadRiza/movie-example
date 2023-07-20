@@ -4,14 +4,12 @@ package com.riza.example.explore.genredetail.state
  * Created by ahmadriza on 20/07/23.
  */
 
-sealed class GenreDetailItemModel {
+sealed interface GenreDetailItemModel {
 
-    abstract val key: String
-
-    object LoadMore: GenreDetailItemModel() {
-        override val key: String
-            get() = "LoadMore"
-    }
+    object ErrorMore: GenreDetailItemModel
+    object InitialShimmer: GenreDetailItemModel
+    object InitialError: GenreDetailItemModel
+    object LoadMore: GenreDetailItemModel
 
     data class Movie(
         val id: Int,
@@ -19,8 +17,5 @@ sealed class GenreDetailItemModel {
         val title: String,
         val rating: String,
         val releaseDate: String
-    ): GenreDetailItemModel() {
-        override val key: String
-            get() = "Movie:$id"
-    }
+    ): GenreDetailItemModel
 }

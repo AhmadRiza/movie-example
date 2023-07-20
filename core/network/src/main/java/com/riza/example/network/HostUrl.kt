@@ -6,4 +6,5 @@ package com.riza.example.network
  */
 object HostUrl {
     const val TMDB_BASE_URL = "https://api.themoviedb.org/3/"
+    const val TMDB_BASE_IMAGE_URL = "https://image.tmdb.org/t/p/"
 }

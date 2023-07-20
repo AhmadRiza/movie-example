@@ -7,6 +7,7 @@ import com.riza.example.explore.data.entity.MovieListEntity
 import com.riza.example.explore.data.model.MovieItem
 import com.riza.example.explore.data.usecase.GetMoviesByGenre.GetMoviesByGenreResult
 import com.riza.example.explore.di.ExploreServiceScope
+import com.riza.example.network.mapper.toImdbImageUrl
 import javax.inject.Inject
 
 /**
@@ -15,7 +16,7 @@ import javax.inject.Inject
 @ExploreServiceScope
 class GetMoviesByGenre @Inject constructor(
     private val repository: ExploreRepository
-): BaseUseCase<GetMoviesByGenreResult, GetMoviesByGenre.Params>() {
+) : BaseUseCase<GetMoviesByGenreResult, GetMoviesByGenre.Params>() {
 
     data class Params(
         val page: Int,
@@ -28,14 +29,15 @@ class GetMoviesByGenre @Inject constructor(
             val totalPage: Int,
             val totalResult: Int,
             val movies: List<MovieItem>
-        ): GetMoviesByGenreResult
-        object Empty: GetMoviesByGenreResult
-        data class Error(val message: String): GetMoviesByGenreResult
+        ) : GetMoviesByGenreResult
+
+        object Empty : GetMoviesByGenreResult
+        data class Error(val message: String) : GetMoviesByGenreResult
     }
 
     override suspend fun build(params: Params?): GetMoviesByGenreResult {
         requireNotNull(params)
-        return when(
+        return when (
             val result = repository.getMoviesByGenre(
                 genreId = params.genreId,
                 page = params.page
@@ -44,6 +46,7 @@ class GetMoviesByGenre @Inject constructor(
             is Result.Success.WithData -> {
                 result.data.toResult()
             }
+
             is Result.Success.Empty -> GetMoviesByGenreResult.Empty
             is Result.Error -> GetMoviesByGenreResult.Error(result.errorMessage)
         }
@@ -52,25 +55,25 @@ class GetMoviesByGenre @Inject constructor(
 
     private fun MovieListEntity.toResult(): GetMoviesByGenreResult.Success {
         return GetMoviesByGenreResult.Success(
-            currentPage = page?:0,
-            totalPage = totalPages?:0,
-            totalResult = totalResults?:0,
+            currentPage = page ?: 0,
+            totalPage = totalPages ?: 0,
+            totalResult = totalResults ?: 0,
             movies = results.orEmpty().map {
                 MovieItem(
-                    adult = it.adult?:false,
-                    backdropPath = it.backdropPath,
+                    adult = it.adult ?: false,
+                    backdropPath = it.backdropPath?.toImdbImageUrl().orEmpty(),
                     genreIds = listOf(),
                     id = it.id ?: 0,
                     originalLanguage = it.originalLanguage.orEmpty(),
                     originalTitle = it.originalTitle.orEmpty(),
                     overview = it.overview.orEmpty(),
-                    popularity = it.popularity?:0.0,
-                    posterPath = it.posterPath,
+                    popularity = it.popularity ?: 0.0,
+                    posterPath = it.posterPath?.toImdbImageUrl().orEmpty(),
                     releaseDate = it.releaseDate.orEmpty(),
                     title = it.title.orEmpty(),
-                    video = it.video?:false,
-                    voteAverage = it.voteAverage?:0.0,
-                    voteCount = it.voteCount?:0
+                    video = it.video ?: false,
+                    voteAverage = it.voteAverage ?: 0.0,
+                    voteCount = it.voteCount ?: 0
                 )
             }
         )

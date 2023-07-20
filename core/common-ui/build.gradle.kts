@@ -29,5 +29,6 @@ dependencies {
     implementation(libs.compose.ui.tooling.preview)
     implementation(libs.compose.constraintlayout)
     implementation(libs.compose.coil)
+    implementation(libs.compose.accompanist.placeholder)
     debugImplementation(libs.compose.ui.tooling)
 }

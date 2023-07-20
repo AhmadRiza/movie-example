@@ -47,6 +47,7 @@ GenreDetailViewModel>() {
             GenreDetailScreen(
                 state = state,
                 onBackPress = this::onBackPressed,
+                sendIntent = this::dispatch
             )
         }
         dispatch(GenreDetailViewModel.Intent.OnViewCreated(intentParam))

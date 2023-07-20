@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -33,6 +34,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import coil.compose.AsyncImage
+import com.google.accompanist.placeholder.PlaceholderHighlight
+import com.google.accompanist.placeholder.material.placeholder
+import com.google.accompanist.placeholder.material.shimmer
+import com.riza.example.commonui.shared.shimmering
 import com.riza.example.explore.genredetail.state.GenreDetailItemModel
 import com.riza.example.explore.genredetail.state.GenreDetailItemModel.Movie
 import com.riza.example.explore.ui.R
@@ -87,7 +92,7 @@ fun MovieCell(
                 ),
                 modifier = Modifier.padding(horizontal = 8.dp)
             )
-            Spacer(modifier =Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = movie.releaseDate,
                 style = MaterialTheme.typography.bodyMedium.copy(
@@ -117,5 +122,39 @@ fun MovieCell(
 
 
     }
+
+}
+
+
+@Preview
+@Composable
+fun MovieShimmer() {
+    OutlinedCard {
+        Column {
+            Spacer(
+                modifier = Modifier
+                    .aspectRatio(1f)
+                    .shimmering()
+            )
+            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(
+                modifier = Modifier
+                    .padding(horizontal = 10.dp)
+                    .fillMaxWidth()
+                    .height(18.dp)
+                    .shimmering()
+            )
+            Spacer(modifier = Modifier.height(10.dp))
+            Spacer(
+                modifier = Modifier
+                    .padding(horizontal = 10.dp)
+                    .width(80.dp)
+                    .height(12.dp)
+                    .shimmering()
+            )
+            Spacer(modifier = Modifier.height(10.dp))
+        }
+    }
+
 
 }
