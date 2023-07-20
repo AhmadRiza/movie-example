@@ -8,6 +8,6 @@ sealed interface GenresDisplayState {
     ) : GenresDisplayState
 
     object Loading : GenresDisplayState
-    data class ErrorLoadGenres(val message: String) : GenresDisplayState
+    object ErrorLoadGenres : GenresDisplayState
 }
     

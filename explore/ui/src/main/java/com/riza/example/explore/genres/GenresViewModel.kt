@@ -28,6 +28,7 @@ class GenresViewModel @Inject constructor(
 
     sealed interface Intent {
         object OnViewCreated: Intent
+        object OnTryAgain: Intent
         data class OnGenreClick(val genre: Genre): Intent
     }
 
@@ -40,7 +41,12 @@ class GenresViewModel @Inject constructor(
         when(intent) {
             Intent.OnViewCreated -> onViewCreated()
             is Intent.OnGenreClick -> onGenreClick(intent.genre)
+            Intent.OnTryAgain -> onTryAgain()
         }
+    }
+
+    private fun onTryAgain() {
+        viewModelScope.launch { loadGenres() }
     }
 
     private fun onGenreClick(genre: Genre) {
@@ -51,25 +57,23 @@ class GenresViewModel @Inject constructor(
     }
 
     private fun onViewCreated() {
-        viewModelScope.launch {
-            setState { copy(displayState = GenresDisplayState.Loading) }
-            delay(1000)
-            when (val result = withContext(ioDispatcher) { getMovieGenres() }) {
-                GetMovieGenres.GetGenresResult.Empty -> {
-                    setState { copy(displayState = GenresDisplayState.ErrorLoadGenres("Empty")) }
-                }
-                is GetMovieGenres.GetGenresResult.Error -> {
-                    setState {
-                        copy(displayState = GenresDisplayState.ErrorLoadGenres(result.message))
-                    }
-                }
-                is GetMovieGenres.GetGenresResult.Success -> {
-                    setState {
-                        copy(displayState = GenresDisplayState.SuccessLoadGenres(result.genres))
-                    }
+        viewModelScope.launch { loadGenres() }
+    }
+
+    private suspend fun loadGenres() {
+        setState { copy(displayState = GenresDisplayState.Loading) }
+        when (val result = withContext(ioDispatcher) { getMovieGenres() }) {
+            GetMovieGenres.GetGenresResult.Empty,
+            is GetMovieGenres.GetGenresResult.Error -> {
+                setState {
+                    copy(displayState = GenresDisplayState.ErrorLoadGenres)
                 }
             }
-
+            is GetMovieGenres.GetGenresResult.Success -> {
+                setState {
+                    copy(displayState = GenresDisplayState.SuccessLoadGenres(result.genres))
+                }
+            }
         }
     }
 }
