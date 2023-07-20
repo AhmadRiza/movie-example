@@ -47,6 +47,7 @@ dependencies {
     implementation(libs.compose.constraintlayout)
     implementation(libs.compose.coil)
     implementation(libs.compose.activity)
+    implementation(libs.compose.accompanist.placeholder)
     implementation(libs.compose.runtime.livedata)
     debugImplementation(libs.compose.ui.tooling)
 

@@ -51,7 +51,7 @@ import com.riza.example.explore.genres.state.GenresDisplayState
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GenresScreen(state: State, sendIntent: (GenresViewModel.Intent) -> Unit) {
-    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+    val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
 
     MyTheme {
         Scaffold(
@@ -76,35 +76,16 @@ fun GenresScreen(state: State, sendIntent: (GenresViewModel.Intent) -> Unit) {
         ) { innerPadding ->
             when(val display = state.displayState) {
                 GenresDisplayState.Loading -> {
-                    Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                        CircularProgressIndicator()
-                    }
+                    GenresLoadingContent(modifier = Modifier.padding(innerPadding))
                 }
                 is GenresDisplayState.SuccessLoadGenres -> {
-                    LazyVerticalGrid(
+                    GenresSuccessContent(
                         modifier = Modifier.padding(innerPadding),
-                        columns = GridCells.Adaptive(minSize = 100.dp),
-                        contentPadding = PaddingValues(16.dp),
-                        verticalArrangement = Arrangement.spacedBy(10.dp),
-                        horizontalArrangement = Arrangement.spacedBy(10.dp),
-                    ) {
-                        val items = display.genres
-                        items(
-                            count = items.size,
-                            key = { items[it].name },
-                            itemContent = { idx: Int ->
-                                GenreRow(
-                                    genre = items[idx],
-                                    onClick = {
-                                        sendIntent(
-                                            GenresViewModel.Intent.OnGenreClick(display.genres[idx])
-                                        )
-                                    }
-                                )
-                            }
-
-                        )
-                    }
+                        genres = { display.genres },
+                        onGenreClicked = {
+                            sendIntent(GenresViewModel.Intent.OnGenreClick(it))
+                        }
+                    )
                 }
                 is GenresDisplayState.ErrorLoadGenres -> {
 
@@ -112,6 +93,53 @@ fun GenresScreen(state: State, sendIntent: (GenresViewModel.Intent) -> Unit) {
             }
 
         }
+    }
+}
+
+@Composable
+fun GenresLoadingContent(modifier: Modifier) {
+    LazyVerticalGrid(
+        modifier = modifier,
+        columns = GridCells.Adaptive(minSize = 100.dp),
+        contentPadding = PaddingValues(16.dp),
+        verticalArrangement = Arrangement.spacedBy(10.dp),
+        horizontalArrangement = Arrangement.spacedBy(10.dp),
+    ) {
+        items(12) {
+            GenreShimmer()
+        }
+    }
+}
+
+@Composable
+fun GenresSuccessContent(
+    modifier: Modifier = Modifier,
+    genres: () -> List<Genre>,
+    onGenreClicked: (genre: Genre) -> Unit
+) {
+    val items = genres()
+
+    LazyVerticalGrid(
+        modifier = modifier,
+        columns = GridCells.Adaptive(minSize = 100.dp),
+        contentPadding = PaddingValues(16.dp),
+        verticalArrangement = Arrangement.spacedBy(10.dp),
+        horizontalArrangement = Arrangement.spacedBy(10.dp)
+    ) {
+        items(
+            count = items.size,
+            key = { items[it].name },
+            itemContent = { idx: Int ->
+                val genre = items[idx]
+                GenreRow(
+                    genre = genre,
+                    onClick = {
+                        onGenreClicked(genre)
+                    }
+                )
+            }
+
+        )
     }
 
 }

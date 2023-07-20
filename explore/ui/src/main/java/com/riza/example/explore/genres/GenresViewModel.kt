@@ -8,6 +8,7 @@ import com.riza.example.explore.data.usecase.GetMovieGenres
 import com.riza.example.explore.genres.state.GenresDisplayState
 import com.riza.example.explore.navigator.GenreDetailIntentParam
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -52,6 +53,7 @@ class GenresViewModel @Inject constructor(
     private fun onViewCreated() {
         viewModelScope.launch {
             setState { copy(displayState = GenresDisplayState.Loading) }
+            delay(1000)
             when (val result = withContext(ioDispatcher) { getMovieGenres() }) {
                 GetMovieGenres.GetGenresResult.Empty -> {
                     setState { copy(displayState = GenresDisplayState.ErrorLoadGenres("Empty")) }
