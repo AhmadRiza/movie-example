@@ -9,14 +9,14 @@ import okhttp3.Response
  * Copyright (c) 2022 Kitabisa. All rights reserved.
  */
 class HeaderInterceptor(
-    private val githubToken: String
+    private val tmdbApiKey: String
 ) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val builder = chain.request().newBuilder()
 
         val request = builder.addHeader(NetworkHeader.CONTENT_TYPE, "application/json")
             .addHeader(NetworkHeader.ACCEPT, "application/json")
-            .addHeader(NetworkHeader.AUTHORIZATION, githubToken)
+            .addHeader(NetworkHeader.AUTHORIZATION, "Bearer $tmdbApiKey")
             .build()
 
         return chain.proceed(request)

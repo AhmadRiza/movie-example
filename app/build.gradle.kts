@@ -55,6 +55,12 @@ android {
     }
 
     buildTypes {
+
+        all {
+            val tmdbApiKey: String by project
+            buildConfigField("String", "TMDB_API_KEY", tmdbApiKey)
+        }
+
         getByName("debug") {
             applicationIdSuffix = ".staging"
             isMinifyEnabled = false
@@ -87,6 +93,7 @@ android {
 
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 
     composeOptions {

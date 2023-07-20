@@ -27,7 +27,7 @@ class MyApp : Application() {
         )
         NetworkComponentHolder.buildComponent(
             applicationContext = this,
-            githubToken = "token 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"
+            tmdbApiKey = BuildConfig.TMDB_API_KEY
         )
         PublicComponentFactoryRegistry.registerPublicComponent()
     }

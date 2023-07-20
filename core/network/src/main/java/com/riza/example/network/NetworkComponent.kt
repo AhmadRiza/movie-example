@@ -11,6 +11,6 @@ interface NetworkComponent {
 
     fun okHttpClient(): OkHttpClient
 
-    @Named("github-retrofit")
-    fun githubRetrofit(): Retrofit
+    @Named("tmdb-retrofit")
+    fun tmdbRetrofit(): Retrofit
 }

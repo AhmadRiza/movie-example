@@ -8,13 +8,13 @@ object NetworkComponentHolder {
     // Only Run in in the application level
     fun buildComponent(
         applicationContext: Context,
-        githubToken: String
+        tmdbApiKey: String
     ) {
         networkComponent = DaggerNetworkComponent.builder()
             .networkModule(
                 NetworkModule(
                     context = applicationContext,
-                    githubToken = githubToken
+                    tmdbApiKey = tmdbApiKey
                 )
             )
             .build()

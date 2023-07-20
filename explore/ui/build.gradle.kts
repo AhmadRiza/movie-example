@@ -31,6 +31,7 @@ dependencies {
     implementation(project(":core:common"))
     implementation(project(":core:common-ui"))
     implementation(project(":explore:api"))
+    implementation(project(":explore:service"))
 
     implementation(libs.kotlin)
     implementation(libs.android.core)
@@ -46,6 +47,7 @@ dependencies {
     implementation(libs.compose.constraintlayout)
     implementation(libs.compose.coil)
     implementation(libs.compose.activity)
+    implementation(libs.compose.runtime.livedata)
     debugImplementation(libs.compose.ui.tooling)
 
     implementation(libs.javax.inject)

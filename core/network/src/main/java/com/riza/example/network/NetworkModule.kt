@@ -19,7 +19,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 @Module
 class NetworkModule(
     private val context: Context,
-    private val githubToken: String
+    private val tmdbApiKey: String
 ) {
 
     @Provides
@@ -42,7 +42,7 @@ class NetworkModule(
     @NetworkScope
     @Named("header-interceptor")
     fun provideHttpInterceptor(): Interceptor {
-        return HeaderInterceptor(githubToken)
+        return HeaderInterceptor(tmdbApiKey)
     }
 
     @Provides
@@ -72,7 +72,7 @@ class NetworkModule(
 
     @Provides
     @NetworkScope
-    @Named("explore-retrofit")
+    @Named("tmdb-retrofit")
     fun provideGithubRetrofit(
         okHttpClient: OkHttpClient,
         gson: Gson,

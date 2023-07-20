@@ -6,13 +6,14 @@ import com.riza.example.explore.data.ExploreRepository
 import com.riza.example.explore.data.model.Genre
 import com.riza.example.explore.data.usecase.GetMovieGenres.GetGenresResult
 import com.riza.example.explore.di.ExploreServiceScope
+import javax.inject.Inject
 
 /**
  * Created by ahmadriza on 19/07/23.
  */
 
 @ExploreServiceScope
-class GetMovieGenres constructor(
+class GetMovieGenres @Inject constructor(
     private val repository: ExploreRepository
 ) : BaseUseCase<GetGenresResult, Unit>() {
 
@@ -29,7 +30,7 @@ class GetMovieGenres constructor(
                     Genre(
                         id = it.id ?: 0,
                         name = it.name.orEmpty(),
-                        emoticon = emoticonMap.getOrElse(it.name.orEmpty()) {
+                        emoticon = emoticonMap.getOrElse(it.name.orEmpty().lowercase()) {
                             "🍿"
                         }
                     )
@@ -56,6 +57,12 @@ class GetMovieGenres constructor(
         "horror" to "🧛‍",
         "music" to "👨‍🎤",
         "mystery" to "🕵️‍",
+        "romance" to "👰‍",
+        "science fiction" to "👽",
+        "tv movie" to "🎭",
+        "thriller" to "🦈",
+        "war" to "🔫",
+        "western" to "🤠"
     )
 
 }

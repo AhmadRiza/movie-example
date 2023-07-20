@@ -8,7 +8,8 @@ import dagger.Component
 @ExploreScope
 @Component(
     dependencies = [
-        CoreComponent::class
+        CoreComponent::class,
+        ExploreServiceComponent::class
     ],
     modules = [ExploreViewModelModule::class]
 )
@@ -19,5 +20,6 @@ interface ExploreComponent {
 fun buildAppComponent(): ExploreComponent {
     return DaggerExploreComponent.builder()
         .coreComponent(CoreComponentHolder.coreComponent)
+        .exploreServiceComponent(ExploreServiceComponentHolder.exploreServiceComponent)
         .build()
 }
