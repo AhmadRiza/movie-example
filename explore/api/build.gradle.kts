@@ -2,6 +2,7 @@ plugins {
     id("com.android.library")
     kotlin("android")
     id("com.riza.example.module")
+    id("kotlin-parcelize")
 }
 
 android {

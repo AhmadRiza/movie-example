@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.riza.example.explore.genres.GenresViewModel
 import com.riza.example.common.di.ViewModelKey
+import com.riza.example.explore.genredetail.GenreDetailViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -14,7 +15,11 @@ interface ExploreViewModelModule {
     @Binds
     @IntoMap
     @ViewModelKey(GenresViewModel::class)
-    fun bindMainViewModel(viewModel: GenresViewModel): ViewModel
+    fun bindGenresViewModel(viewModel: GenresViewModel): ViewModel
+    @Binds
+    @IntoMap
+    @ViewModelKey(GenreDetailViewModel::class)
+    fun bindGenreDetailViewModel(viewModel: GenreDetailViewModel): ViewModel
 
     @Binds
     fun bindAppViewModelFactory(

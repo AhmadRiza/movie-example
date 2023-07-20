@@ -40,6 +40,7 @@ import androidx.core.view.WindowCompat
 import androidx.lifecycle.LiveData
 import com.riza.example.commonui.theme.MyTheme
 import com.riza.example.explore.data.model.Genre
+import com.riza.example.explore.genres.GenresViewModel
 import com.riza.example.explore.genres.GenresViewModel.State
 import com.riza.example.explore.genres.state.GenresDisplayState
 
@@ -49,7 +50,7 @@ import com.riza.example.explore.genres.state.GenresDisplayState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun GenresScreen(state: State) {
+fun GenresScreen(state: State, sendIntent: (GenresViewModel.Intent) -> Unit) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
     MyTheme {
@@ -87,13 +88,19 @@ fun GenresScreen(state: State) {
                         verticalArrangement = Arrangement.spacedBy(10.dp),
                         horizontalArrangement = Arrangement.spacedBy(10.dp),
                     ) {
+                        val items = display.genres
                         items(
-                            count = display.genres.size,
-                            key = { display.genres[it].id },
+                            count = items.size,
+                            key = { items[it].name },
                             itemContent = { idx: Int ->
-                                GenreRow(genre = display.genres[idx]) {
-                                    
-                                }
+                                GenreRow(
+                                    genre = items[idx],
+                                    onClick = {
+                                        sendIntent(
+                                            GenresViewModel.Intent.OnGenreClick(display.genres[idx])
+                                        )
+                                    }
+                                )
                             }
 
                         )
@@ -115,5 +122,8 @@ fun GenresScreen(state: State) {
 private fun Preview() {
     val genre = Genre(id = 0, name = "Action", emoticon = "✊")
     val genres = listOf(genre)
-    GenresScreen(State().copy(displayState = GenresDisplayState.SuccessLoadGenres(genres)))
+    GenresScreen(
+        state = State().copy(displayState = GenresDisplayState.SuccessLoadGenres(genres)),
+        sendIntent = {}
+    )
 }

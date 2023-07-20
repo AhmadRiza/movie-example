@@ -8,4 +8,5 @@ import android.content.Intent
  */
 interface ExploreNavigator {
     fun getGenresIntent(context: Context): Intent
+    fun getGenreDetailIntent(context: Context, param: GenreDetailIntentParam): Intent
 }

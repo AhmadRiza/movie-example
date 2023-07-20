@@ -2,5 +2,6 @@
 
     <application>
         <activity android:name="com.riza.example.explore.genres.GenresActivity" />
+        <activity android:name="com.riza.example.explore.genredetail.GenreDetailActivity" />
     </application>
 </manifest>

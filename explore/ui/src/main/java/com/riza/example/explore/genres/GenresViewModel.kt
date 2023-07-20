@@ -3,8 +3,10 @@ package com.riza.example.explore.genres
 import androidx.lifecycle.viewModelScope
 import com.riza.example.common.base.BaseViewModel
 import com.riza.example.common.di.IODispatcher
+import com.riza.example.explore.data.model.Genre
 import com.riza.example.explore.data.usecase.GetMovieGenres
 import com.riza.example.explore.genres.state.GenresDisplayState
+import com.riza.example.explore.navigator.GenreDetailIntentParam
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -25,15 +27,26 @@ class GenresViewModel @Inject constructor(
 
     sealed interface Intent {
         object OnViewCreated: Intent
+        data class OnGenreClick(val genre: Genre): Intent
     }
 
 
-    class Effect
+    sealed interface Effect {
+        data class OpenGenreDetail(val intentParam: GenreDetailIntentParam): Effect
+    }
 
     override fun onIntentReceived(intent: Intent) {
         when(intent) {
             Intent.OnViewCreated -> onViewCreated()
+            is Intent.OnGenreClick -> onGenreClick(intent.genre)
         }
+    }
+
+    private fun onGenreClick(genre: Genre) {
+        val intentParam = GenreDetailIntentParam(
+            genreId = genre.id, genreName = genre.name, genreIcon = genre.emoticon
+        )
+        setEffect(Effect.OpenGenreDetail(intentParam))
     }
 
     private fun onViewCreated() {
