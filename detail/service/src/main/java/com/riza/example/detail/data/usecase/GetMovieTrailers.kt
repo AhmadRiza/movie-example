@@ -38,7 +38,9 @@ class GetMovieTrailers @Inject constructor(
                 GetMovieTrailersResult.Empty
             } else {
                 GetMovieTrailersResult.Success(
-                    result.data.results!!.map { it.toTrailer() }
+                    result.data.results!!
+                        .filter { it.site.equals("youtube", true) }
+                        .map { it.toTrailer() }
                 )
             }
         }

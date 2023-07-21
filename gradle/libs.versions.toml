@@ -49,6 +49,8 @@ composeBom = "2023.06.01"
 coil = "2.1.0"
 accompanist = "0.25.1"
 
+playerYoutube = "12.0.0"
+
 # Testing
 archCoreTesting = "2.1.0"
 jUnit = "4.13.2"
@@ -157,6 +159,8 @@ compose-accompanist-swiperefresh = { module = "com.google.accompanist:accompanis
 compose-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4" }
 compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
 
+#Player
+player-youtube = { module = "com.pierfrancescosoffritti.androidyoutubeplayer:core", version.ref = "playerYoutube" }
 
 # Testing
 arch-core-testing = { module = "androidx.arch.core:core-testing", version.ref = "archCoreTesting" }

@@ -10,11 +10,12 @@ import com.riza.example.common.base.BaseVMComposeActivity
 import com.riza.example.common.extension.parcelable
 import com.riza.example.detail.di.buildComponent
 import com.riza.example.detail.movie.compose.MovieDetailScreen
+import com.riza.example.detail.player.YoutubePlayerActivity
 
 /**
  * Created by ahmadriza on 21/07/23.
  */
-class MovieDetailActivity: BaseVMComposeActivity<MovieDetailViewModel.Intent,
+class MovieDetailActivity : BaseVMComposeActivity<MovieDetailViewModel.Intent,
         MovieDetailViewModel.State,
         MovieDetailViewModel.Effect,
         MovieDetailViewModel>() {
@@ -53,7 +54,13 @@ class MovieDetailActivity: BaseVMComposeActivity<MovieDetailViewModel.Intent,
     }
 
     override fun renderEffect(effect: MovieDetailViewModel.Effect) {
-
+        when (effect) {
+            is MovieDetailViewModel.Effect.OpenYoutubePlayer -> {
+                startActivity(
+                    YoutubePlayerActivity.createIntent(this, effect.videoId)
+                )
+            }
+        }
     }
 
 }

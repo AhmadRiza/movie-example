@@ -1,6 +1,7 @@
 package com.riza.example.detail.movie.compose
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -25,8 +26,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.PlayArrow
 import androidx.compose.material.icons.rounded.Star
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -169,7 +168,12 @@ fun MovieDetailScreen(
                             MovieDetailItemModel.Trailers.Error -> {}
                             MovieDetailItemModel.Trailers.Loading -> {}
                             is MovieDetailItemModel.Trailers.Success -> {
-                                MovieTrailersSection(trailer = item)
+                                MovieTrailersSection(
+                                    trailer = item,
+                                    onClickTrailer = {
+                                        sendIntent(MovieDetailViewModel.Intent.OnTrailerClick(it))
+                                    }
+                                )
                             }
 
                             MovieDetailItemModel.Detail.Error -> {
@@ -256,7 +260,8 @@ fun MovieDetailRow(detail: MovieDetailItemModel.Detail.Success) {
 
 @Composable
 fun MovieTrailersSection(
-    trailer: MovieDetailItemModel.Trailers.Success
+    trailer: MovieDetailItemModel.Trailers.Success,
+    onClickTrailer: (videoId: String) -> Unit
 ) {
     Column(modifier = Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(16.dp)) {
 
@@ -274,7 +279,12 @@ fun MovieTrailersSection(
                 items = trailer.trailers,
                 key = { _, item -> "trailer_${item.id}" }
             ) { _, item ->
-                MovieTrailersRow(item)
+                MovieTrailersRow(
+                    item,
+                    onClick = {
+                        onClickTrailer(item.youtubeKey)
+                    }
+                )
             }
 
         }
@@ -302,8 +312,16 @@ fun MovieOverviewSection(model: MovieDetailItemModel.Overview.Success) {
 }
 
 @Composable
-fun MovieTrailersRow(trailer: MovieDetailItemModel.Trailers.Success.Video) {
-    Column(modifier = Modifier.width(140.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+fun MovieTrailersRow(
+    trailer: MovieDetailItemModel.Trailers.Success.Video,
+    onClick: () -> Unit
+) {
+    Column(
+        modifier = Modifier
+            .width(140.dp)
+            .clickable(onClick = onClick),
+        verticalArrangement = Arrangement.spacedBy(4.dp)
+    ) {
 
         Box(
             modifier = Modifier
@@ -425,7 +443,7 @@ private fun Preview() {
         MovieDetailItemModel.Trailers.Success(
             trailers = listOf(
                 MovieDetailItemModel.Trailers.Success.Video(
-                    thumbnail = "", url = "", title = "Trailer 1", id = ""
+                    thumbnail = "", youtubeKey = "", title = "Trailer 1", id = ""
                 )
             )
         ),

@@ -3,6 +3,10 @@
     <application>
 
         <activity android:name="com.riza.example.detail.movie.MovieDetailActivity" />
+        <activity
+            android:theme="@style/Theme.YoutubePlayer"
+            android:name="com.riza.example.detail.player.YoutubePlayerActivity"
+            android:screenOrientation="landscape"/>
     </application>
 
 </manifest>

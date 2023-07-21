@@ -39,10 +39,14 @@ class MovieDetailViewModel @Inject constructor(
         object RetryLoadMoreReviews : Intent
         object RetryGetDetail : Intent
         object RetryGetTrailer : Intent
+
+        data class OnTrailerClick(val videoId: String): Intent
     }
 
 
-    class Effect
+    sealed interface Effect {
+        data class OpenYoutubePlayer(val videoId: String): Effect
+    }
 
     private var movieId: Int = 0
     private var nextPageParam: GetMovieReviews.Param? = null
@@ -56,6 +60,9 @@ class MovieDetailViewModel @Inject constructor(
             Intent.RetryGetDetail -> onRetryGetDetail()
             Intent.RetryGetTrailer -> onRetryGetTrailer()
             Intent.RetryLoadMoreReviews -> onRetryLoadMoreReviews()
+            is Intent.OnTrailerClick -> {
+                setEffect(Effect.OpenYoutubePlayer(intent.videoId))
+            }
         }
     }
 
@@ -183,7 +190,7 @@ class MovieDetailViewModel @Inject constructor(
                             trailers = result.trailers.map {
                                 Video(
                                     thumbnail = it.thumbnail,
-                                    url = it.key,
+                                    youtubeKey = it.key,
                                     title = it.name,
                                     id = it.id
                                 )

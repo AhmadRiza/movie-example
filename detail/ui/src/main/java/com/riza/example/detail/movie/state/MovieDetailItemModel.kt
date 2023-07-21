@@ -30,7 +30,7 @@ sealed interface MovieDetailItemModel {
         ): Trailers {
             data class Video(
                 val thumbnail: String,
-                val url: String,
+                val youtubeKey: String,
                 val title: String,
                 val id: String
             )
