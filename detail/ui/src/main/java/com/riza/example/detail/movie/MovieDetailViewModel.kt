@@ -52,11 +52,46 @@ class MovieDetailViewModel @Inject constructor(
     override fun onIntentReceived(intent: Intent) {
         when (intent) {
             is Intent.OnViewCreated -> onViewCreated(intent.movieId)
-            Intent.LoadMoreReviews -> TODO()
-            Intent.RetryGetDetail -> TODO()
-            Intent.RetryGetTrailer -> TODO()
-            Intent.RetryLoadMoreReviews -> TODO()
+            Intent.LoadMoreReviews -> onLoadMoreReviews()
+            Intent.RetryGetDetail -> onRetryGetDetail()
+            Intent.RetryGetTrailer -> onRetryGetTrailer()
+            Intent.RetryLoadMoreReviews -> onRetryLoadMoreReviews()
         }
+    }
+
+    private fun onRetryGetTrailer() {
+        viewModelScope.launch {
+            updateItem(
+                viewState.displayItems.first { it is MovieDetailItemModel.Trailers },
+                MovieDetailItemModel.Trailers.Loading
+            )
+            loadMovieTrailers()
+        }
+    }
+
+    private fun onRetryGetDetail() {
+        viewModelScope.launch {
+            updateItem(
+                viewState.displayItems.first { it is MovieDetailItemModel.Detail },
+                MovieDetailItemModel.Detail.Loading
+            )
+            loadMovieDetail()
+        }
+    }
+
+
+
+    private fun onRetryLoadMoreReviews() {
+        viewModelScope.launch {
+            updateItem(
+                viewState.displayItems.first { it is MovieDetailItemModel.ErrorLoadMoreReview },
+                MovieDetailItemModel.LoadMoreReview
+            )
+        }
+    }
+
+    private fun onLoadMoreReviews() {
+        loadMovieReview()
     }
 
     private fun onViewCreated(movieId: Int) {
@@ -180,6 +215,7 @@ class MovieDetailViewModel @Inject constructor(
                 }
 
                 is GetReviewResult.Success -> {
+
                     val items = viewState.displayItems.filter {
                         it !is MovieDetailItemModel.LoadMoreReview
                     }.toMutableList()
@@ -193,7 +229,14 @@ class MovieDetailViewModel @Inject constructor(
                         )
                     }
                     items.addAll(reviews)
-                    items.add(MovieDetailItemModel.LoadMoreReview)
+                    if (result.currentPage == result.totalPage) {
+                        nextPageParam = null
+                    } else {
+                        nextPageParam = GetMovieReviews.Param(
+                            movieId = movieId, page = result.currentPage + 1
+                        )
+                        items.add(MovieDetailItemModel.LoadMoreReview)
+                    }
                     setState { copy(displayItems = items.toMutableList()) }
                 }
             }
@@ -224,7 +267,6 @@ class MovieDetailViewModel @Inject constructor(
             MovieDetailItemModel.Trailers.Loading,
             MovieDetailItemModel.Overview.Loading,
             MovieDetailItemModel.ReviewTitle.Loading,
-            MovieDetailItemModel.LoadMoreReview,
         )
     }
 

@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -25,6 +26,7 @@ import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.PlayArrow
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material3.Card
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -32,9 +34,14 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SuggestionChip
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -42,7 +49,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
@@ -62,6 +69,17 @@ fun MovieDetailScreen(
     onBackPress: () -> Unit,
     sendIntent: (MovieDetailViewModel.Intent) -> Unit
 ) {
+
+    val lazyListState = rememberLazyListState()
+    val isLoadMoreItemVisible by remember(state.displayItems) {
+        derivedStateOf {
+            val loadMoreItem = lazyListState.layoutInfo.visibleItemsInfo.lastOrNull {
+                it.key == "load_more_review"
+            }
+            loadMoreItem != null
+        }
+    }
+
     MyTheme {
         Scaffold(
             topBar = {
@@ -120,8 +138,16 @@ fun MovieDetailScreen(
                                 MovieDetailRow(detail = item)
                             }
 
-                            MovieDetailItemModel.ErrorLoadMoreReview -> {}
-                            MovieDetailItemModel.LoadMoreReview -> {}
+                            MovieDetailItemModel.ErrorLoadMoreReview -> {
+                                ErrorLoadMoreReviewRow(
+                                    onRetry = {
+                                        sendIntent(MovieDetailViewModel.Intent.LoadMoreReviews)
+                                    }
+                                )
+                            }
+                            MovieDetailItemModel.LoadMoreReview -> {
+                                LoadMoreReviewRow()
+                            }
                             MovieDetailItemModel.Overview.Error -> {}
                             MovieDetailItemModel.Overview.Loading -> {}
                             is MovieDetailItemModel.Overview.Success -> {
@@ -151,6 +177,11 @@ fun MovieDetailScreen(
                     }
                 )
             }
+        }
+    }
+    LaunchedEffect(isLoadMoreItemVisible) {
+        if (isLoadMoreItemVisible) {
+            sendIntent(MovieDetailViewModel.Intent.LoadMoreReviews)
         }
     }
 }
@@ -326,7 +357,9 @@ fun ReviewHeaderRow(model: MovieDetailItemModel.ReviewTitle.Success) {
 
 @Composable
 fun ReviewRow(review: MovieDetailItemModel.Review) {
-    Card(modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp)) {
+    Card(modifier = Modifier
+        .fillMaxWidth()
+        .padding(horizontal = 16.dp)) {
         Column(Modifier.padding(16.dp)) {
             Text(
                 text = review.username,
@@ -411,5 +444,55 @@ private fun Preview() {
         onBackPress = {},
         sendIntent = {}
     )
+
+}
+
+
+@Preview(showBackground = true)
+@Composable
+private fun LoadMoreReviewRow(onTryAgain: () -> Unit = {}) {
+
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(10.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        CircularProgressIndicator(
+            modifier = Modifier.size(32.dp)
+        )
+        Text(
+            text = "More reviews incoming...",
+            style = MaterialTheme.typography.bodyLarge.copy(
+                textAlign = TextAlign.Center,
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
+            ),
+            modifier = Modifier.fillMaxWidth()
+        )
+
+    }
+
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ErrorLoadMoreReviewRow(onRetry: () -> Unit = {}) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 32.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = "💁🏼‍ Failed to load more reviews.",
+            style = MaterialTheme.typography.bodyLarge.copy(
+                color = MaterialTheme.colorScheme.error
+            )
+        )
+        TextButton(onClick = onRetry) {
+            Text(text = "Try again")
+        }
+    }
 
 }
