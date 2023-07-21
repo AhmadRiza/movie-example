@@ -26,7 +26,9 @@ import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.PlayArrow
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -216,9 +218,12 @@ fun MovieDetailRow(detail: MovieDetailItemModel.Detail.Success) {
             ) {
                 detail.genres.forEach {
                     SuggestionChip(
+                        modifier = Modifier
+                            .padding(bottom = 10.dp)
+                            .height(26.dp),
                         onClick = { /*TODO*/ },
                         label = {
-                            Text(text = "# ${it.name}")
+                            Text(text = "# ${it.name}", style = MaterialTheme.typography.bodySmall)
                         }
                     )
                 }
@@ -312,7 +317,7 @@ fun MovieTrailersRow(trailer: MovieDetailItemModel.Trailers.Success.Video) {
                     .aspectRatio(1.5f)
                     .alpha(0.8f),
                 model = trailer.thumbnail,
-                contentScale = ContentScale.Crop,
+                contentScale = ContentScale.FillBounds,
                 contentDescription = null
             )
 
@@ -357,9 +362,10 @@ fun ReviewHeaderRow(model: MovieDetailItemModel.ReviewTitle.Success) {
 
 @Composable
 fun ReviewRow(review: MovieDetailItemModel.Review) {
-    Card(modifier = Modifier
+    ElevatedCard(modifier = Modifier
         .fillMaxWidth()
-        .padding(horizontal = 16.dp)) {
+        .padding(horizontal = 16.dp)
+    ) {
         Column(Modifier.padding(16.dp)) {
             Text(
                 text = review.username,

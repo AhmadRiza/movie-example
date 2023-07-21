@@ -11,6 +11,7 @@ enum class DateFormat(val format: String) {
     DAY_ONLY("dd"),
     MONTH_YEAR("MMMM yyyy"),
     ISO_TIMESTAMP("yyyy-MM-dd'T'HH:mm:ssXXX"),
+    ISO_TIMESTAMP_2("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"),
     YEAR_MONTH_DAY_DASH("yyyy-MM-dd"),
     YEAR_MONTH_DAY_SLASH("yyyy/MM/dd"),
 }

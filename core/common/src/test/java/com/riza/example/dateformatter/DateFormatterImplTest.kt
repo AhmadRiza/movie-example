@@ -247,4 +247,20 @@ class DateFormatterImplTest {
             calendarUtc.get(Calendar.HOUR)
         )
     }
+
+    @Test
+    fun timeZoneISO2Test() {
+        val dateUtc = dateFormatter.getDateOrNull(
+            "2023-07-10T17:00:13.000Z",
+            DateFormat.ISO_TIMESTAMP_2
+        )
+        val calendarUtc = Calendar.getInstance().apply {
+            time = dateUtc
+        }
+
+        assertEquals(
+            17,
+            calendarUtc.get(Calendar.HOUR_OF_DAY)
+        )
+    }
 }

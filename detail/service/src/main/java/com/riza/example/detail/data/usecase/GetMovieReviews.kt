@@ -64,9 +64,12 @@ class GetMovieReviews @Inject constructor(
     }
 
     private fun ReviewEntity.toReview() : Review {
-        val reviewDate = dateFormatter.getDateOrNull(createdAt.orEmpty(), DateFormat.ISO_TIMESTAMP)
+        val reviewDate = dateFormatter.getDateOrNull(
+            createdAt.orEmpty(),
+            DateFormat.ISO_TIMESTAMP_2
+        )
         val formattedDate = reviewDate?.let { date: Date ->
-            dateFormatter.getFormattedDate(date.time, DateFormat.DATE_TIME_2)
+            dateFormatter.getFormattedDate(date.time, DateFormat.DATE_ONLY)
         }
         return Review(
             id = id.orEmpty(),

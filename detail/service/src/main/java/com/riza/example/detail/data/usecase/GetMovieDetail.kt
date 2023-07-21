@@ -49,7 +49,7 @@ class GetMovieDetail @Inject constructor(
         return MovieDetail(
             title = title.orEmpty(),
             thumbnail = posterPath?.toTmdbImageUrl().orEmpty(),
-            genres = genres.orEmpty().map {
+            genres = genres.orEmpty().take(3).map {
                 MovieDetail.Genre(
                     id = it.id ?: 0,
                     name = it.name.orEmpty()
