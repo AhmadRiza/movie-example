@@ -7,7 +7,7 @@ import com.riza.example.explore.data.entity.MovieListEntity
 import com.riza.example.explore.data.model.MovieItem
 import com.riza.example.explore.data.usecase.GetMoviesByGenre.GetMoviesByGenreResult
 import com.riza.example.explore.di.ExploreServiceScope
-import com.riza.example.network.mapper.toImdbImageUrl
+import com.riza.example.network.mapper.toTmdbImageUrl
 import javax.inject.Inject
 
 /**
@@ -61,14 +61,14 @@ class GetMoviesByGenre @Inject constructor(
             movies = results.orEmpty().map {
                 MovieItem(
                     adult = it.adult ?: false,
-                    backdropPath = it.backdropPath?.toImdbImageUrl().orEmpty(),
+                    backdropPath = it.backdropPath?.toTmdbImageUrl().orEmpty(),
                     genreIds = listOf(),
                     id = it.id ?: 0,
                     originalLanguage = it.originalLanguage.orEmpty(),
                     originalTitle = it.originalTitle.orEmpty(),
                     overview = it.overview.orEmpty(),
                     popularity = it.popularity ?: 0.0,
-                    posterPath = it.posterPath?.toImdbImageUrl().orEmpty(),
+                    posterPath = it.posterPath?.toTmdbImageUrl().orEmpty(),
                     releaseDate = it.releaseDate.orEmpty(),
                     title = it.title.orEmpty(),
                     video = it.video ?: false,

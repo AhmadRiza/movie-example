@@ -9,6 +9,5 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class GenreDetailIntentParam(
     val genreId: Int,
-    val genreName: String,
-    val genreIcon: String,
+    val genreName: String
 ): Parcelable

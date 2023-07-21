@@ -14,7 +14,8 @@ import javax.inject.Inject
 
 @ExploreServiceScope
 class GetMovieGenres @Inject constructor(
-    private val repository: ExploreRepository
+    private val repository: ExploreRepository,
+    private val getGenreEmoticon: GetGenreEmoticon
 ) : BaseUseCase<GetGenresResult, Unit>() {
 
     sealed interface GetGenresResult {
@@ -30,9 +31,7 @@ class GetMovieGenres @Inject constructor(
                     Genre(
                         id = it.id ?: 0,
                         name = it.name.orEmpty(),
-                        emoticon = emoticonMap.getOrElse(it.name.orEmpty().lowercase()) {
-                            "🍿"
-                        }
+                        emoticon = getGenreEmoticon(it.name)
                     )
                 }
                 GetGenresResult.Success(genres)
@@ -42,27 +41,5 @@ class GetMovieGenres @Inject constructor(
             is Result.Error -> GetGenresResult.Error(result.errorMessage)
         }
     }
-
-    private val emoticonMap = mapOf(
-        "action" to "✊",
-        "comedy" to "🤣",
-        "adventure" to "🧗‍",
-        "animation" to "🧚‍",
-        "crime" to "🦹‍",
-        "documentary" to "🎬",
-        "drama" to "💃",
-        "family" to "👨‍👩‍👧‍👦",
-        "fantasy" to "🛸",
-        "history" to "🗿",
-        "horror" to "🧛‍",
-        "music" to "👨‍🎤",
-        "mystery" to "🕵️‍",
-        "romance" to "👰‍",
-        "science fiction" to "👽",
-        "tv movie" to "🎭",
-        "thriller" to "🦈",
-        "war" to "🔫",
-        "western" to "🤠"
-    )
 
 }

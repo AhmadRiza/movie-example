@@ -10,6 +10,6 @@ enum class TMDBImageSize {
     W500, W300, ORIGINAL
 }
 
-fun String.toImdbImageUrl(size: TMDBImageSize = TMDBImageSize.W500): String {
+fun String.toTmdbImageUrl(size: TMDBImageSize = TMDBImageSize.W500): String {
     return "${HostUrl.TMDB_BASE_IMAGE_URL}${size.name.lowercase()}$this"
 }

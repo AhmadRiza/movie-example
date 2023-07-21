@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.riza.example.common.base.BaseViewModel
 import com.riza.example.common.di.IODispatcher
 import com.riza.example.explore.data.model.MovieItem
+import com.riza.example.explore.data.usecase.GetGenreEmoticon
 import com.riza.example.explore.data.usecase.GetMoviesByGenre
 import com.riza.example.explore.genredetail.GenreDetailViewModel.State
 import com.riza.example.explore.genredetail.state.GenreDetailItemModel
@@ -19,6 +20,7 @@ import javax.inject.Inject
  */
 class GenreDetailViewModel @Inject constructor(
     private val getMoviesByGenre: GetMoviesByGenre,
+    private val getGenreEmoticon: GetGenreEmoticon,
     @IODispatcher private val ioDispatcher: CoroutineDispatcher
 ) : BaseViewModel<GenreDetailViewModel.Intent, State, GenreDetailViewModel.Effect>(
     State()
@@ -76,9 +78,10 @@ class GenreDetailViewModel @Inject constructor(
 
     private fun onViewCreated(intentParam: GenreDetailIntentParam) {
         viewModelScope.launch {
+            val genreEmoticon = getGenreEmoticon(intentParam.genreName)
             setState {
                 copy(
-                    title = "${intentParam.genreIcon} ${intentParam.genreName}",
+                    title = "$genreEmoticon ${intentParam.genreName}",
                     items = getInitialShimmerItems()
                 )
             }
