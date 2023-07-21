@@ -2,7 +2,6 @@ package com.riza.example.detail.di
 
 import androidx.annotation.VisibleForTesting
 import com.riza.example.common.di.CoreComponentHolder
-import com.riza.example.explore.di.ExploreServiceComponentHolder
 import com.riza.example.network.NetworkComponentHolder
 
 object DetailServiceComponentHolder {
