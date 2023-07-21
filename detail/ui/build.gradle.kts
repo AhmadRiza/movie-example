@@ -30,6 +30,7 @@ android {
 dependencies {
     implementation(project(":core:common"))
     implementation(project(":core:common-ui"))
+    implementation(project(":explore:api"))
     implementation(project(":detail:api"))
     implementation(project(":detail:service"))
 

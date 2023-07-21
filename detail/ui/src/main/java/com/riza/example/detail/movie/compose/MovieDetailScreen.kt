@@ -58,6 +58,7 @@ import coil.compose.AsyncImage
 import com.riza.example.commonui.theme.MyTheme
 import com.riza.example.detail.movie.MovieDetailViewModel
 import com.riza.example.detail.movie.state.MovieDetailItemModel
+import com.riza.example.detail.movie.state.MovieDetailItemModel.Detail.Success.Genre
 
 /**
  * Created by ahmadriza on 21/07/23.
@@ -136,7 +137,14 @@ fun MovieDetailScreen(
                             }
 
                             is MovieDetailItemModel.Detail.Success -> {
-                                MovieDetailRow(detail = item)
+                                MovieDetailRow(
+                                    detail = item,
+                                    onGenreClick = {
+                                        sendIntent(
+                                            MovieDetailViewModel.Intent.OnGenreClick(it)
+                                        )
+                                    }
+                                )
                             }
 
                             MovieDetailItemModel.ErrorLoadMoreReview -> {
@@ -195,7 +203,10 @@ fun MovieDetailScreen(
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun MovieDetailRow(detail: MovieDetailItemModel.Detail.Success) {
+fun MovieDetailRow(
+    detail: MovieDetailItemModel.Detail.Success,
+    onGenreClick: (Genre) -> Unit
+) {
     Row(
         modifier = Modifier.padding(16.dp),
         horizontalArrangement = Arrangement.spacedBy(16.dp)
@@ -225,7 +236,7 @@ fun MovieDetailRow(detail: MovieDetailItemModel.Detail.Success) {
                         modifier = Modifier
                             .padding(bottom = 10.dp)
                             .height(26.dp),
-                        onClick = { /*TODO*/ },
+                        onClick = { onGenreClick(it) },
                         label = {
                             Text(text = "# ${it.name}", style = MaterialTheme.typography.bodySmall)
                         }
@@ -437,7 +448,7 @@ private fun Preview() {
             releaseDate = "10 October 2021",
             countries = "US",
             genres = listOf(
-                MovieDetailItemModel.Detail.Success.Genre("Comedy", 1)
+                Genre("Comedy", 1)
             )
         ),
         MovieDetailItemModel.Trailers.Success(

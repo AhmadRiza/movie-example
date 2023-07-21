@@ -9,6 +9,7 @@ import com.riza.example.detail.data.usecase.GetMovieReviews.GetReviewResult
 import com.riza.example.detail.data.usecase.GetMovieTrailers
 import com.riza.example.detail.movie.state.MovieDetailItemModel
 import com.riza.example.detail.movie.state.MovieDetailItemModel.Trailers.Success.Video
+import com.riza.example.explore.navigator.GenreDetailIntentParam
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
@@ -41,11 +42,14 @@ class MovieDetailViewModel @Inject constructor(
         object RetryGetTrailer : Intent
 
         data class OnTrailerClick(val videoId: String): Intent
+
+        data class OnGenreClick(val genre: MovieDetailItemModel.Detail.Success.Genre): Intent
     }
 
 
     sealed interface Effect {
         data class OpenYoutubePlayer(val videoId: String): Effect
+        data class OpenGenreDetail(val intentParam: GenreDetailIntentParam): Effect
     }
 
     private var movieId: Int = 0
@@ -63,7 +67,16 @@ class MovieDetailViewModel @Inject constructor(
             is Intent.OnTrailerClick -> {
                 setEffect(Effect.OpenYoutubePlayer(intent.videoId))
             }
+
+            is Intent.OnGenreClick -> onGenreClick(intent.genre)
         }
+    }
+
+    private fun onGenreClick(genre: MovieDetailItemModel.Detail.Success.Genre) {
+        val intentParam = GenreDetailIntentParam(
+            genre.id, genre.name
+        )
+        setEffect(Effect.OpenGenreDetail(intentParam))
     }
 
     private fun onRetryGetTrailer() {

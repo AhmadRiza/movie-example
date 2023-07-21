@@ -11,6 +11,8 @@ import com.riza.example.common.extension.parcelable
 import com.riza.example.detail.di.buildComponent
 import com.riza.example.detail.movie.compose.MovieDetailScreen
 import com.riza.example.detail.player.YoutubePlayerActivity
+import com.riza.example.explore.navigator.ExploreNavigator
+import javax.inject.Inject
 
 /**
  * Created by ahmadriza on 21/07/23.
@@ -29,6 +31,9 @@ class MovieDetailActivity : BaseVMComposeActivity<MovieDetailViewModel.Intent,
             }
         }
     }
+
+    @Inject
+    lateinit var exploreNavigator: ExploreNavigator
 
     private val movieId: Int by lazy {
         intent.getIntExtra(EXTRA_MOVIE_ID, 0)
@@ -58,6 +63,12 @@ class MovieDetailActivity : BaseVMComposeActivity<MovieDetailViewModel.Intent,
             is MovieDetailViewModel.Effect.OpenYoutubePlayer -> {
                 startActivity(
                     YoutubePlayerActivity.createIntent(this, effect.videoId)
+                )
+            }
+
+            is MovieDetailViewModel.Effect.OpenGenreDetail -> {
+                startActivity(
+                    exploreNavigator.getGenreDetailIntent(this, effect.intentParam)
                 )
             }
         }
