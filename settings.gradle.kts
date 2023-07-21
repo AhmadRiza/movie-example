@@ -23,5 +23,6 @@ include(
     ":app", ":core:network", ":core:cache", ":core:common",  ":core:common-ui",
     ":core:public-component",
 //    ":auth:ui", ":auth:api",
-    ":explore:ui", ":explore:api", ":explore:service"
+    ":explore:ui", ":explore:api", ":explore:service",
+    ":detail:ui", ":detail:api", ":detail:service"
 )
