@@ -11,5 +11,6 @@ android {
 dependencies {
     implementation(project(":core:common"))
     implementation(project(":explore:ui"))
+    implementation(project(":detail:ui"))
     implementation(libs.kotlin)
 }

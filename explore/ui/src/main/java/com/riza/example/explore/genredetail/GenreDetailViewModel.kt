@@ -37,10 +37,14 @@ class GenreDetailViewModel @Inject constructor(
         object RetryLoadMore : Intent
 
         object RetryInitialLoad : Intent
+
+        data class OnMovieClick(val movieId: Int): Intent
     }
 
 
-    class Effect
+    sealed interface Effect {
+        data class OpenMovieDetail(val movieId: Int): Effect
+    }
 
     private var nextPageParam: GetMoviesByGenre.Params? = null
 
@@ -50,6 +54,9 @@ class GenreDetailViewModel @Inject constructor(
             Intent.LoadMoreMovies -> onLoadMoreMovies()
             Intent.RetryInitialLoad -> onRetryInitialLoad()
             Intent.RetryLoadMore -> onRetryLoadMore()
+            is Intent.OnMovieClick -> {
+                setEffect(Effect.OpenMovieDetail(movieId = intent.movieId))
+            }
         }
     }
 

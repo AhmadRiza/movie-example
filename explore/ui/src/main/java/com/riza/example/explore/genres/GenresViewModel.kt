@@ -51,7 +51,7 @@ class GenresViewModel @Inject constructor(
 
     private fun onGenreClick(genre: Genre) {
         val intentParam = GenreDetailIntentParam(
-            genreId = genre.id, genreName = genre.name, genreIcon = genre.emoticon
+            genreId = genre.id, genreName = genre.name
         )
         setEffect(Effect.OpenGenreDetail(intentParam))
     }

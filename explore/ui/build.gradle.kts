@@ -32,6 +32,7 @@ dependencies {
     implementation(project(":core:common-ui"))
     implementation(project(":explore:api"))
     implementation(project(":explore:service"))
+    implementation(project(":detail:api"))
 
     implementation(libs.kotlin)
     implementation(libs.android.core)

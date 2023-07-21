@@ -2,6 +2,7 @@
 
     <application>
 
+        <activity android:name="com.riza.example.detail.movie.MovieDetailActivity" />
     </application>
 
 </manifest>

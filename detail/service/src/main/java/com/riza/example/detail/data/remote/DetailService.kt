@@ -13,13 +13,13 @@ import retrofit2.http.Query
  */
 interface DetailService {
 
-    @GET("movie/{id})")
+    @GET("movie/{id}")
     suspend fun getMovieDetail(@Path("id") movieId: Int): Response<MovieDataEntity>
 
-    @GET("movie/{id}/videos)")
+    @GET("movie/{id}/videos")
     suspend fun getMovieTrailers(@Path("id") movieId: Int): Response<MovieTrailerDataEntity>
 
-    @GET("movie/{id}/reviews)")
+    @GET("movie/{id}/reviews")
     suspend fun getMovieReviews(
         @Path("id") movieId: Int,
         @Query("page") page: Int

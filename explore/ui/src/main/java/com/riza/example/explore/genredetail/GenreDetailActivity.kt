@@ -8,9 +8,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import com.riza.example.common.base.BaseVMComposeActivity
 import com.riza.example.common.extension.parcelable
+import com.riza.example.detail.navigator.DetailNavigator
 import com.riza.example.explore.di.buildAppComponent
 import com.riza.example.explore.genredetail.compose.GenreDetailScreen
 import com.riza.example.explore.navigator.GenreDetailIntentParam
+import javax.inject.Inject
 
 /**
  * Created by ahmadriza on 20/07/23.
@@ -29,6 +31,9 @@ GenreDetailViewModel>() {
             }
         }
     }
+
+    @Inject
+    lateinit var detailNavigator: DetailNavigator
 
     private val intentParam: GenreDetailIntentParam by lazy {
         intent.parcelable(EXTRA_GENRE)!!
@@ -54,7 +59,11 @@ GenreDetailViewModel>() {
     }
 
     override fun renderEffect(effect: GenreDetailViewModel.Effect) {
-
+        when(effect) {
+            is GenreDetailViewModel.Effect.OpenMovieDetail -> {
+                startActivity(detailNavigator.getMovieDetailIntent(this, effect.movieId))
+            }
+        }
     }
 
 }

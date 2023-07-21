@@ -9,6 +9,6 @@ import com.riza.example.network.HostUrl
 /**
  * Generate youtube thumbnail from youtube video ID
  */
-fun String.toYoutubeThumbnail(number: Int = 0): String {
-    return "${HostUrl.YOUTUBE_THUMBNAIL_URL}/$this/$number.jpg"
+fun String.toYoutubeThumbnail(): String {
+    return HostUrl.YOUTUBE_THUMBNAIL_URL.replace("{id}", this)
 }

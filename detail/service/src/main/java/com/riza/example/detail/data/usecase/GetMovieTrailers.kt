@@ -47,7 +47,7 @@ class GetMovieTrailers @Inject constructor(
     private fun TrailerEntity.toTrailer(): Trailer {
         return Trailer(
             name = name.orEmpty(),
-            thumbnail = id.orEmpty().toYoutubeThumbnail(),
+            thumbnail = key.orEmpty().toYoutubeThumbnail(),
             id = id.orEmpty(),
             key = key.orEmpty()
         )

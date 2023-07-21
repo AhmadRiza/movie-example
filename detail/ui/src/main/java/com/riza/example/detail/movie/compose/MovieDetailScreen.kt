@@ -42,6 +42,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
@@ -56,7 +57,11 @@ import com.riza.example.detail.movie.state.MovieDetailItemModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MovieDetailScreen(state: MovieDetailViewModel.State) {
+fun MovieDetailScreen(
+    state: MovieDetailViewModel.State,
+    onBackPress: () -> Unit,
+    sendIntent: (MovieDetailViewModel.Intent) -> Unit
+) {
     MyTheme {
         Scaffold(
             topBar = {
@@ -64,7 +69,7 @@ fun MovieDetailScreen(state: MovieDetailViewModel.State) {
                     TopAppBar(
                         title = {},
                         navigationIcon = {
-                            IconButton(onClick = { /*TODO*/ }) {
+                            IconButton(onClick = onBackPress) {
                                 Icon(
                                     imageVector = Icons.Rounded.ArrowBack,
                                     contentDescription = null
@@ -82,12 +87,12 @@ fun MovieDetailScreen(state: MovieDetailViewModel.State) {
             LazyColumn(
                 modifier = Modifier.padding(innerPadding),
                 contentPadding = PaddingValues(bottom = 32.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp)
+                verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 itemsIndexed(
                     items = state.displayItems,
                     key = { _: Int, item: MovieDetailItemModel ->
-                        when(item) {
+                        when (item) {
                             MovieDetailItemModel.Detail.Loading -> "detail_load"
                             is MovieDetailItemModel.Detail.Success -> "detail"
                             MovieDetailItemModel.ErrorLoadMoreReview -> "error_load_review"
@@ -102,37 +107,45 @@ fun MovieDetailScreen(state: MovieDetailViewModel.State) {
                             MovieDetailItemModel.Trailers.Error -> "trailer_error"
                             MovieDetailItemModel.Trailers.Loading -> "trailer_loading"
                             is MovieDetailItemModel.Trailers.Success -> "trailer"
+                            MovieDetailItemModel.Detail.Error -> "detail_error"
                         }
                     },
                     itemContent = { _: Int, item: MovieDetailItemModel ->
-                        when(item) {
+                        when (item) {
                             MovieDetailItemModel.Detail.Loading -> {
-                                
+
                             }
+
                             is MovieDetailItemModel.Detail.Success -> {
                                 MovieDetailRow(detail = item)
                             }
-                            MovieDetailItemModel.ErrorLoadMoreReview -> { }
-                            MovieDetailItemModel.LoadMoreReview -> { }
-                            MovieDetailItemModel.Overview.Error -> { }
-                            MovieDetailItemModel.Overview.Loading -> { }
+
+                            MovieDetailItemModel.ErrorLoadMoreReview -> {}
+                            MovieDetailItemModel.LoadMoreReview -> {}
+                            MovieDetailItemModel.Overview.Error -> {}
+                            MovieDetailItemModel.Overview.Loading -> {}
                             is MovieDetailItemModel.Overview.Success -> {
                                 MovieOverviewSection(model = item)
                             }
+
                             is MovieDetailItemModel.Review -> {
-                                Spacer(modifier = Modifier.height(10.dp))
                                 ReviewRow(item)
                             }
-                            MovieDetailItemModel.ReviewTitle.Error -> { }
-                            MovieDetailItemModel.ReviewTitle.Loading -> { }
+
+                            MovieDetailItemModel.ReviewTitle.Error -> {}
+                            MovieDetailItemModel.ReviewTitle.Loading -> {}
                             is MovieDetailItemModel.ReviewTitle.Success -> {
                                 ReviewHeaderRow(model = item)
                             }
 
-                            MovieDetailItemModel.Trailers.Error -> { }
-                            MovieDetailItemModel.Trailers.Loading -> { }
+                            MovieDetailItemModel.Trailers.Error -> {}
+                            MovieDetailItemModel.Trailers.Loading -> {}
                             is MovieDetailItemModel.Trailers.Success -> {
                                 MovieTrailersSection(trailer = item)
+                            }
+
+                            MovieDetailItemModel.Detail.Error -> {
+                                
                             }
                         }
                     }
@@ -165,6 +178,7 @@ fun MovieDetailRow(detail: MovieDetailItemModel.Detail.Success) {
                 text = detail.title,
                 style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold)
             )
+            Spacer(modifier = Modifier.height(8.dp))
             FlowRow(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(10.dp)
@@ -221,9 +235,9 @@ fun MovieTrailersSection(
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             itemsIndexed(
-                items  = trailer.trailers,
-                key = { _, item -> "trailer_${item.id}"}
-            ) {_, item ->
+                items = trailer.trailers,
+                key = { _, item -> "trailer_${item.id}" }
+            ) { _, item ->
                 MovieTrailersRow(item)
             }
 
@@ -233,8 +247,8 @@ fun MovieTrailersSection(
 }
 
 @Composable
-fun MovieOverviewSection(model: MovieDetailItemModel.Overview) {
-    Column(modifier = Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(16.dp)) {
+fun MovieOverviewSection(model: MovieDetailItemModel.Overview.Success) {
+    Column(modifier = Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(10.dp)) {
 
         Text(
             modifier = Modifier.padding(horizontal = 16.dp),
@@ -244,7 +258,7 @@ fun MovieOverviewSection(model: MovieDetailItemModel.Overview) {
 
         Text(
             modifier = Modifier.padding(horizontal = 16.dp),
-            text = LoremIpsum().values.first(),
+            text = model.overview,
             style = MaterialTheme.typography.bodyMedium
         )
 
@@ -253,16 +267,17 @@ fun MovieOverviewSection(model: MovieDetailItemModel.Overview) {
 
 @Composable
 fun MovieTrailersRow(trailer: MovieDetailItemModel.Trailers.Success.Video) {
-    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+    Column(modifier = Modifier.width(140.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
 
         Box(
             modifier = Modifier
+                .clip(RoundedCornerShape(8.dp))
                 .background(color = MaterialTheme.colorScheme.inverseSurface),
             contentAlignment = Alignment.Center
         ) {
             AsyncImage(
                 modifier = Modifier
-                    .width(120.dp)
+                    .fillMaxWidth()
                     .aspectRatio(1.5f)
                     .alpha(0.8f),
                 model = trailer.thumbnail,
@@ -281,8 +296,9 @@ fun MovieTrailersRow(trailer: MovieDetailItemModel.Trailers.Success.Video) {
         }
 
         Text(
-            text = trailer.url,
-            style = MaterialTheme.typography.labelMedium
+            modifier = Modifier.fillMaxWidth(),
+            text = trailer.title,
+            style = MaterialTheme.typography.labelMedium,
         )
 
     }
@@ -310,7 +326,7 @@ fun ReviewHeaderRow(model: MovieDetailItemModel.ReviewTitle.Success) {
 
 @Composable
 fun ReviewRow(review: MovieDetailItemModel.Review) {
-    Card(modifier = Modifier.padding(horizontal = 16.dp)) {
+    Card(modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp)) {
         Column(Modifier.padding(16.dp)) {
             Text(
                 text = review.username,
@@ -390,6 +406,10 @@ private fun Preview() {
 
     )
 
-    MovieDetailScreen(state = MovieDetailViewModel.State(displayItems = items))
+    MovieDetailScreen(
+        state = MovieDetailViewModel.State(displayItems = items),
+        onBackPress = {},
+        sendIntent = {}
+    )
 
 }

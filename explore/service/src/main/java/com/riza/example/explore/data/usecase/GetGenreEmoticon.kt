@@ -15,7 +15,7 @@ class GetGenreEmoticon @Inject constructor(): NonSuspendingUseCase<String, Strin
 
     override fun build(params: String?): String {
         requireNotNull(params)
-        return emoticonMap.getOrElse(params) {
+        return emoticonMap.getOrElse(params.lowercase()) {
             "🍿"
         }
     }

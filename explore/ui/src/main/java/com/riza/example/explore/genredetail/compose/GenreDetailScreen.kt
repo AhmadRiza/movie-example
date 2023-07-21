@@ -127,7 +127,12 @@ fun GenreDetailScreen(
                             LoadMoreMovieRow()
                         }
                         is GenreDetailItemModel.Movie -> {
-                            MovieCell(movie = item, onClick = {})
+                            MovieCell(
+                                movie = item,
+                                onClick = {
+                                    sendIntent(GenreDetailViewModel.Intent.OnMovieClick(it))
+                                }
+                            )
                         }
 
                         GenreDetailItemModel.ErrorMore -> {

@@ -13,6 +13,7 @@ sealed interface MovieDetailItemModel {
         ) : Detail {
             data class Genre(val name: String, val id: Int)
         }
+        object Error: Detail
     }
 
     sealed interface Overview: MovieDetailItemModel {
