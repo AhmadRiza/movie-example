@@ -104,9 +104,10 @@ class MovieDetailViewModel @Inject constructor(
     private fun onRetryLoadMoreReviews() {
         viewModelScope.launch {
             updateItem(
-                viewState.displayItems.first { it is MovieDetailItemModel.ErrorLoadMoreReview },
+                viewState.displayItems.last { it is MovieDetailItemModel.ErrorLoadMoreReview },
                 MovieDetailItemModel.LoadMoreReview
             )
+            loadMovieReview()
         }
     }
 

@@ -55,6 +55,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.riza.example.commonui.shared.shimmering
 import com.riza.example.commonui.theme.MyTheme
 import com.riza.example.detail.movie.MovieDetailViewModel
 import com.riza.example.detail.movie.state.MovieDetailItemModel
@@ -133,7 +134,7 @@ fun MovieDetailScreen(
                     itemContent = { _: Int, item: MovieDetailItemModel ->
                         when (item) {
                             MovieDetailItemModel.Detail.Loading -> {
-
+                                MovieDetailShimmer()
                             }
 
                             is MovieDetailItemModel.Detail.Success -> {
@@ -148,17 +149,27 @@ fun MovieDetailScreen(
                             }
 
                             MovieDetailItemModel.ErrorLoadMoreReview -> {
-                                ErrorLoadMoreReviewRow(
+                                ErrorRow(
+                                    context = "more reviews",
                                     onRetry = {
-                                        sendIntent(MovieDetailViewModel.Intent.LoadMoreReviews)
+                                        sendIntent(MovieDetailViewModel.Intent.RetryLoadMoreReviews)
                                     }
                                 )
                             }
+
                             MovieDetailItemModel.LoadMoreReview -> {
                                 LoadMoreReviewRow()
                             }
+
                             MovieDetailItemModel.Overview.Error -> {}
-                            MovieDetailItemModel.Overview.Loading -> {}
+                            MovieDetailItemModel.Overview.Loading -> {
+                                Spacer(
+                                    modifier = Modifier.padding(horizontal = 16.dp)
+                                        .fillMaxWidth()
+                                        .height(14.dp)
+                                        .shimmering()
+                                )
+                            }
                             is MovieDetailItemModel.Overview.Success -> {
                                 MovieOverviewSection(model = item)
                             }
@@ -173,8 +184,22 @@ fun MovieDetailScreen(
                                 ReviewHeaderRow(model = item)
                             }
 
-                            MovieDetailItemModel.Trailers.Error -> {}
-                            MovieDetailItemModel.Trailers.Loading -> {}
+                            MovieDetailItemModel.Trailers.Error -> {
+                                ErrorRow(
+                                    context = "movie trailers",
+                                    onRetry = {
+                                        sendIntent(MovieDetailViewModel.Intent.RetryGetTrailer)
+                                    }
+                                )
+                            }
+                            MovieDetailItemModel.Trailers.Loading -> {
+                                Spacer(
+                                    modifier = Modifier.padding(horizontal = 16.dp)
+                                        .width(100.dp)
+                                        .height(50.dp)
+                                        .shimmering()
+                                )
+                            }
                             is MovieDetailItemModel.Trailers.Success -> {
                                 MovieTrailersSection(
                                     trailer = item,
@@ -185,7 +210,12 @@ fun MovieDetailScreen(
                             }
 
                             MovieDetailItemModel.Detail.Error -> {
-                                
+                                ErrorRow(
+                                    context = "movie detail",
+                                    onRetry = {
+                                        sendIntent(MovieDetailViewModel.Intent.RetryGetDetail)
+                                    }
+                                )
                             }
                         }
                     }
@@ -353,7 +383,7 @@ fun MovieTrailersRow(
             Icon(
                 modifier = Modifier
                     .size(32.dp)
-                    .background(color = MaterialTheme.colorScheme.primary, shape = CircleShape),
+                    .background(color = MaterialTheme.colorScheme.secondary, shape = CircleShape),
                 imageVector = Icons.Rounded.PlayArrow,
                 tint = Color.White,
                 contentDescription = null
@@ -391,9 +421,10 @@ fun ReviewHeaderRow(model: MovieDetailItemModel.ReviewTitle.Success) {
 
 @Composable
 fun ReviewRow(review: MovieDetailItemModel.Review) {
-    ElevatedCard(modifier = Modifier
-        .fillMaxWidth()
-        .padding(horizontal = 16.dp)
+    ElevatedCard(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp)
     ) {
         Column(Modifier.padding(16.dp)) {
             Text(
@@ -512,7 +543,7 @@ private fun LoadMoreReviewRow(onTryAgain: () -> Unit = {}) {
 
 @Preview(showBackground = true)
 @Composable
-fun ErrorLoadMoreReviewRow(onRetry: () -> Unit = {}) {
+fun ErrorRow(context: String = "", onRetry: () -> Unit = {}) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -520,7 +551,7 @@ fun ErrorLoadMoreReviewRow(onRetry: () -> Unit = {}) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "💁🏼‍ Failed to load more reviews.",
+            text = "💁🏼‍ Failed to load $context.",
             style = MaterialTheme.typography.bodyLarge.copy(
                 color = MaterialTheme.colorScheme.error
             )
@@ -530,4 +561,62 @@ fun ErrorLoadMoreReviewRow(onRetry: () -> Unit = {}) {
         }
     }
 
+}
+
+
+@Preview
+@Composable
+fun MovieDetailShimmer() {
+    Row(
+        modifier = Modifier.padding(16.dp),
+        horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+
+        Spacer(
+            modifier = Modifier
+                .weight(0.6f)
+                .aspectRatio(0.6f)
+                .shimmering()
+        )
+        Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+            Spacer(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(20.dp)
+                    .shimmering()
+            )
+            Spacer(
+                modifier = Modifier
+                    .width(100.dp)
+                    .height(20.dp)
+                    .shimmering()
+            )
+            Spacer(modifier = Modifier.height(10.dp))
+            Spacer(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(10.dp)
+                    .shimmering()
+            )
+            Spacer(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(10.dp)
+                    .shimmering()
+            )
+            Spacer(modifier = Modifier.height(10.dp))
+            Spacer(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(10.dp)
+                    .shimmering()
+            )
+            Spacer(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(10.dp)
+                    .shimmering()
+            )
+        }
+
+    }
 }
