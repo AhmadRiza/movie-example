@@ -44,7 +44,8 @@ class GetMoviesByGenre @Inject constructor(
             )
         ) {
             is Result.Success.WithData -> {
-                result.data.toResult()
+                if (result.data.results.isNullOrEmpty()) GetMoviesByGenreResult.Empty
+                else result.data.toResult()
             }
 
             is Result.Success.Empty -> GetMoviesByGenreResult.Empty
