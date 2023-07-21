@@ -9,7 +9,6 @@ import com.riza.example.publiccomponent.PublicComponentFactoryRegistry
 
 /**
  * Created by ahmadriza on 15/08/22.
- * Copyright (c) 2022 Kitabisa. All rights reserved.
  */
 class MyApp : Application() {
 

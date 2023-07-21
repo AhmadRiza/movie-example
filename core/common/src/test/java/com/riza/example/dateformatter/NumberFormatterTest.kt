@@ -6,7 +6,6 @@ import org.junit.Test
 
 /**
  * Created by ahmadriza on 16/08/22.
- * Copyright (c) 2022 Kitabisa. All rights reserved.
  */
 
 class NumberFormatterTest {

@@ -6,7 +6,6 @@ import okhttp3.Response
 
 /**
  * Created by ahmadriza on 14/08/22.
- * Copyright (c) 2022 Kitabisa. All rights reserved.
  */
 class HeaderInterceptor(
     private val tmdbApiKey: String
