@@ -94,6 +94,7 @@ class GenreDetailViewModel @Inject constructor(
         when (val result = withContext(ioDispatcher) { getMoviesByGenre(params) }) {
             GetMoviesByGenre.GetMoviesByGenreResult.Empty -> {
                 nextPageParam = null
+                setState { copy(items = movieOnlyItems) }
             }
 
             is GetMoviesByGenre.GetMoviesByGenreResult.Error -> {

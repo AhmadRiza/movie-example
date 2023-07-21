@@ -196,11 +196,11 @@ fun ErrorLoadMoreMovieRow(onRetry: () -> Unit = {}) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp),
+            .padding(horizontal = 16.dp, vertical = 32.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "💁🏼‍ Something is wrong on the way.",
+            text = "💁🏼‍ Failed to load more movie.",
             style = MaterialTheme.typography.bodyLarge.copy(
                 color = MaterialTheme.colorScheme.error
             )
