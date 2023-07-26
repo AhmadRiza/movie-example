@@ -59,8 +59,11 @@ dependencies {
     kapt(libs.dagger.compiler)
 
     // unit test
+    testImplementation(project(":core:test"))
     testImplementation(libs.coroutines.test)
     testImplementation(libs.kotest.runner.junit5)
     testImplementation(libs.arch.core.testing)
     testImplementation(libs.mockk)
+    testImplementation(libs.kotest.runner.junit5)
+    testImplementation(libs.kotest.assertions)
 }

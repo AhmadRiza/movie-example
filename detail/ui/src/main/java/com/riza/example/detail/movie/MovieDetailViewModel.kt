@@ -81,7 +81,7 @@ class MovieDetailViewModel @Inject constructor(
     private fun onRetryGetTrailer() {
         viewModelScope.launch {
             updateItem(
-                viewState.displayItems.first { it is MovieDetailItemModel.Trailers },
+                viewState.displayItems.indexOfFirst { it is MovieDetailItemModel.Trailers },
                 MovieDetailItemModel.Trailers.Loading
             )
             loadMovieTrailers()
@@ -91,7 +91,7 @@ class MovieDetailViewModel @Inject constructor(
     private fun onRetryGetDetail() {
         viewModelScope.launch {
             updateItem(
-                viewState.displayItems.first { it is MovieDetailItemModel.Detail },
+                viewState.displayItems.indexOfFirst { it is MovieDetailItemModel.Detail },
                 MovieDetailItemModel.Detail.Loading
             )
             loadMovieDetail()
@@ -101,7 +101,9 @@ class MovieDetailViewModel @Inject constructor(
     private fun onRetryLoadMoreReviews() {
         viewModelScope.launch {
             updateItem(
-                viewState.displayItems.last { it is MovieDetailItemModel.ErrorLoadMoreReview },
+                viewState.displayItems.indexOfFirst {
+                    it is MovieDetailItemModel.ErrorLoadMoreReview
+                },
                 MovieDetailItemModel.LoadMoreReview
             )
             loadMovieReview()
@@ -128,15 +130,17 @@ class MovieDetailViewModel @Inject constructor(
             when (val result = withContext(ioDispatcher) { getMovieDetail(movieId) }) {
                 GetMovieDetail.GetDetailResult.Error -> {
                     updateItem(
-                        viewState.displayItems.first { it is MovieDetailItemModel.Detail },
+                        viewState.displayItems.indexOfFirst { it is MovieDetailItemModel.Detail },
                         MovieDetailItemModel.Detail.Error
                     )
                     updateItem(
-                        viewState.displayItems.first { it is MovieDetailItemModel.Overview },
+                        viewState.displayItems.indexOfFirst { it is MovieDetailItemModel.Overview },
                         MovieDetailItemModel.Overview.Error
                     )
                     updateItem(
-                        viewState.displayItems.first { it is MovieDetailItemModel.ReviewTitle },
+                        viewState.displayItems.indexOfFirst {
+                            it is MovieDetailItemModel.ReviewTitle
+                        },
                         MovieDetailItemModel.ReviewTitle.Error
                     )
                 }
@@ -156,17 +160,19 @@ class MovieDetailViewModel @Inject constructor(
                         )
                     }
                     updateItem(
-                        viewState.displayItems.first { it is MovieDetailItemModel.Detail },
+                        viewState.displayItems.indexOfFirst { it is MovieDetailItemModel.Detail },
                         detail
                     )
                     updateItem(
-                        viewState.displayItems.first { it is MovieDetailItemModel.Overview },
+                        viewState.displayItems.indexOfFirst { it is MovieDetailItemModel.Overview },
                         MovieDetailItemModel.Overview.Success(
                             overview = result.detail.overview
                         )
                     )
                     updateItem(
-                        viewState.displayItems.first { it is MovieDetailItemModel.ReviewTitle },
+                        viewState.displayItems.indexOfFirst {
+                            it is MovieDetailItemModel.ReviewTitle
+                        },
                         MovieDetailItemModel.ReviewTitle.Success(
                             average = result.detail.voteAverage.toString(),
                             total = result.detail.voteCount.toString()
@@ -182,21 +188,21 @@ class MovieDetailViewModel @Inject constructor(
             when (val result = withContext(ioDispatcher) { getMovieTrailers(movieId) }) {
                 GetMovieTrailers.GetMovieTrailersResult.Empty -> {
                     updateItem(
-                        viewState.displayItems.first { it is MovieDetailItemModel.Trailers },
+                        viewState.displayItems.indexOfFirst { it is MovieDetailItemModel.Trailers },
                         null
                     )
                 }
 
                 GetMovieTrailers.GetMovieTrailersResult.Error -> {
                     updateItem(
-                        viewState.displayItems.first { it is MovieDetailItemModel.Trailers },
+                        viewState.displayItems.indexOfFirst { it is MovieDetailItemModel.Trailers },
                         MovieDetailItemModel.Trailers.Error
                     )
                 }
 
                 is GetMovieTrailers.GetMovieTrailersResult.Success -> {
                     updateItem(
-                        viewState.displayItems.first { it is MovieDetailItemModel.Trailers },
+                        viewState.displayItems.indexOfFirst { it is MovieDetailItemModel.Trailers },
                         MovieDetailItemModel.Trailers.Success(
                             trailers = result.trailers.map {
                                 Video(
@@ -262,12 +268,11 @@ class MovieDetailViewModel @Inject constructor(
     }
 
     private suspend fun updateItem(
-        old: MovieDetailItemModel,
+        index: Int,
         new: MovieDetailItemModel?
     ) {
         mutex.withLock {
             val mutableItems = viewState.displayItems.toMutableList()
-            val index = mutableItems.indexOf(old)
             if (index != -1) {
                 if (new == null) {
                     mutableItems.removeAt(index)
