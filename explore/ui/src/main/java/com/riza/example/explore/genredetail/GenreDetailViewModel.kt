@@ -10,10 +10,10 @@ import com.riza.example.explore.genredetail.GenreDetailViewModel.State
 import com.riza.example.explore.genredetail.state.GenreDetailItemModel
 import com.riza.example.explore.genredetail.state.GenreDetailItemModel.Movie
 import com.riza.example.explore.navigator.GenreDetailIntentParam
+import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
 /**
  * Created by ahmadriza on 20/07/23.
@@ -38,12 +38,11 @@ class GenreDetailViewModel @Inject constructor(
 
         object RetryInitialLoad : Intent
 
-        data class OnMovieClick(val movieId: Int): Intent
+        data class OnMovieClick(val movieId: Int) : Intent
     }
 
-
     sealed interface Effect {
-        data class OpenMovieDetail(val movieId: Int): Effect
+        data class OpenMovieDetail(val movieId: Int) : Effect
     }
 
     private var nextPageParam: GetMoviesByGenre.Params? = null
@@ -131,18 +130,16 @@ class GenreDetailViewModel @Inject constructor(
                     updatedItems.add(GenreDetailItemModel.LoadMore)
                 }
                 setState { copy(items = updatedItems.toList()) }
-
             }
         }
     }
-
 
     private fun MovieItem.toMovieModel(): Movie {
         return Movie(
             id = id,
             thumbnail = posterPath,
             title = title,
-            rating = "${voteAverage}/10",
+            rating = "$voteAverage/10",
             releaseDate = releaseDate
         )
     }

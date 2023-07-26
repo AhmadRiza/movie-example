@@ -1,11 +1,11 @@
 package com.riza.example
 
 import android.app.Application
-import com.riza.example.router.NavigationRouterImpl
 import com.riza.example.cache.di.CacheComponentHolder
 import com.riza.example.common.di.CoreComponentHolder
 import com.riza.example.network.NetworkComponentHolder
 import com.riza.example.publiccomponent.PublicComponentFactoryRegistry
+import com.riza.example.router.NavigationRouterImpl
 
 /**
  * Created by ahmadriza on 15/08/22.

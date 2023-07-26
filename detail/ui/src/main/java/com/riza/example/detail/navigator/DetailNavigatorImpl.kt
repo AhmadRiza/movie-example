@@ -8,7 +8,7 @@ import javax.inject.Inject
 /**
  * Created by ahmadriza on 21/07/23.
  */
-class DetailNavigatorImpl @Inject constructor(): DetailNavigator {
+class DetailNavigatorImpl @Inject constructor() : DetailNavigator {
     override fun getMovieDetailIntent(context: Context, movieId: Int): Intent {
         return MovieDetailActivity.createIntent(context, movieId)
     }

@@ -1,11 +1,11 @@
 package com.riza.example.explore.di
 
-import com.riza.example.explore.genres.GenresActivity
 import com.riza.example.common.di.CoreComponent
 import com.riza.example.common.di.CoreComponentHolder
 import com.riza.example.detail.di.DetailApiComponent
 import com.riza.example.detail.di.DetailApiComponentHolder
 import com.riza.example.explore.genredetail.GenreDetailActivity
+import com.riza.example.explore.genres.GenresActivity
 import dagger.Component
 
 @ExploreScope

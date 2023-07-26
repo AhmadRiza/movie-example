@@ -10,7 +10,7 @@ import javax.inject.Inject
 /**
  * Created by ahmadriza on 18/07/23.
  */
-class MainActivity: AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var exploreNavigator: ExploreNavigator
@@ -26,5 +26,4 @@ class MainActivity: AppCompatActivity() {
         startActivity(exploreNavigator.getGenresIntent(this))
         finish()
     }
-
 }

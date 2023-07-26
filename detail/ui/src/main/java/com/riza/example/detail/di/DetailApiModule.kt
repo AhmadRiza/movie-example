@@ -5,7 +5,6 @@ import com.riza.example.detail.navigator.DetailNavigatorImpl
 import dagger.Binds
 import dagger.Module
 
-
 @Module
 interface DetailApiModule {
 

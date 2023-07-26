@@ -104,7 +104,7 @@ fun GenreDetailScreen(
                 itemsIndexed(
                     items = state.items,
                     key = { i, item ->
-                        when(item) {
+                        when (item) {
                             GenreDetailItemModel.LoadMore -> "load_more"
                             is GenreDetailItemModel.Movie -> "movie_${item.id}"
                             GenreDetailItemModel.ErrorMore -> "error_load_more"
@@ -137,7 +137,7 @@ fun GenreDetailScreen(
 
                         GenreDetailItemModel.ErrorMore -> {
                             ErrorLoadMoreMovieRow(
-                                onRetry = {sendIntent(GenreDetailViewModel.Intent.RetryLoadMore)}
+                                onRetry = { sendIntent(GenreDetailViewModel.Intent.RetryLoadMore) }
                             )
                         }
 
@@ -154,8 +154,6 @@ fun GenreDetailScreen(
                         }
                     }
                 }
-
-
             }
         }
         LaunchedEffect(isLoadMoreItemVisible) {
@@ -163,10 +161,8 @@ fun GenreDetailScreen(
                 sendIntent(GenreDetailViewModel.Intent.LoadMoreMovies)
             }
         }
-
     }
 }
-
 
 @Preview(showBackground = true)
 @Composable
@@ -190,9 +186,7 @@ private fun LoadMoreMovieRow(onTryAgain: () -> Unit = {}) {
             ),
             modifier = Modifier.fillMaxWidth()
         )
-
     }
-
 }
 
 @Preview(showBackground = true)
@@ -214,5 +208,4 @@ fun ErrorLoadMoreMovieRow(onRetry: () -> Unit = {}) {
             Text(text = "Try again")
         }
     }
-
 }

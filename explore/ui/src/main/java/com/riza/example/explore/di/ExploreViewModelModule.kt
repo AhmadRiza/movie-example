@@ -2,9 +2,9 @@ package com.riza.example.explore.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.riza.example.explore.genres.GenresViewModel
 import com.riza.example.common.di.ViewModelKey
 import com.riza.example.explore.genredetail.GenreDetailViewModel
+import com.riza.example.explore.genres.GenresViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap

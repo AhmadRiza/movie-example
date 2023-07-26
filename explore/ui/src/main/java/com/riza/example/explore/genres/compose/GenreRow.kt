@@ -1,6 +1,5 @@
 package com.riza.example.explore.genres.compose
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -8,7 +7,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -29,7 +27,6 @@ import com.riza.example.explore.data.model.Genre
 /**
  * Created by ahmadriza on 19/07/23.
  */
-
 
 @Preview
 @Composable
@@ -58,9 +55,7 @@ fun GenreRow(genre: Genre, onClick: () -> Unit) {
                 style = MaterialTheme.typography.titleMedium.copy(textAlign = TextAlign.Center)
             )
         }
-
     }
-
 }
 
 @Preview

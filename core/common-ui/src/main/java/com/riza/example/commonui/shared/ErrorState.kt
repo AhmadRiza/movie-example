@@ -34,5 +34,4 @@ fun ErrorStateContent(onTryAgain: () -> Unit = {}) {
             Text(text = "Try Again")
         }
     }
-
 }

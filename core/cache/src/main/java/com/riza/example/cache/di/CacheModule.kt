@@ -21,5 +21,4 @@ class CacheModule(private val applicationContext: Context) {
             Context.MODE_PRIVATE
         )
     }
-
 }

@@ -6,7 +6,6 @@ plugins {
 
 android {
     namespace = "com.riza.example.detail.api"
-
 }
 
 dependencies {

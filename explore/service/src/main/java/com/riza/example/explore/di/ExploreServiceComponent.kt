@@ -7,7 +7,6 @@ import com.riza.example.explore.data.usecase.GetMoviesByGenre
 import com.riza.example.network.NetworkComponent
 import dagger.Component
 
-
 @ExploreServiceScope
 @Component(
     modules = [

@@ -1,6 +1,5 @@
 package com.riza.example.explore.genredetail.compose
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -12,11 +11,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Star
-import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -28,19 +25,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import coil.compose.AsyncImage
-import com.google.accompanist.placeholder.PlaceholderHighlight
-import com.google.accompanist.placeholder.material.placeholder
-import com.google.accompanist.placeholder.material.shimmer
 import com.riza.example.commonui.shared.shimmering
-import com.riza.example.explore.genredetail.state.GenreDetailItemModel
 import com.riza.example.explore.genredetail.state.GenreDetailItemModel.Movie
-import com.riza.example.explore.ui.R
 
 /**
  * Created by ahmadriza on 20/07/23.
@@ -117,14 +108,9 @@ fun MovieCell(
                 Text(text = movie.rating, style = MaterialTheme.typography.bodySmall)
             }
             Spacer(modifier = Modifier.height(8.dp))
-
         }
-
-
     }
-
 }
-
 
 @Preview
 @Composable
@@ -155,6 +141,4 @@ fun MovieShimmer() {
             Spacer(modifier = Modifier.height(10.dp))
         }
     }
-
-
 }

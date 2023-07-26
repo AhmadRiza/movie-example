@@ -19,5 +19,4 @@ interface ExploreService {
         @Query("page") page: Int,
         @Query("with_genres") genre: String,
     ): Response<MovieListEntity>
-
 }

@@ -35,5 +35,3 @@ data class GenreEntity(
 data class ProductionCountryEntity(
     val name: String?
 )
-
-

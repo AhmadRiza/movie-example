@@ -4,8 +4,8 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import com.riza.example.explore.di.buildAppComponent
 import com.riza.example.common.base.BaseVMComposeActivity
+import com.riza.example.explore.di.buildAppComponent
 import com.riza.example.explore.genres.compose.GenresScreen
 import com.riza.example.explore.navigator.ExploreNavigator
 import javax.inject.Inject
@@ -13,10 +13,10 @@ import javax.inject.Inject
 /**
  * Created by ahmadriza on 18/07/23.
  */
-class GenresActivity: BaseVMComposeActivity<GenresViewModel.Intent,
-        GenresViewModel.State,
-        GenresViewModel.Effect,
-        GenresViewModel>() {
+class GenresActivity : BaseVMComposeActivity<GenresViewModel.Intent,
+    GenresViewModel.State,
+    GenresViewModel.Effect,
+    GenresViewModel>() {
 
     @Inject
     lateinit var exploreNavigator: ExploreNavigator
@@ -25,7 +25,6 @@ class GenresActivity: BaseVMComposeActivity<GenresViewModel.Intent,
     }
 
     override fun provideViewModel() = GenresViewModel::class.java
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +36,7 @@ class GenresActivity: BaseVMComposeActivity<GenresViewModel.Intent,
     }
 
     override fun renderEffect(effect: GenresViewModel.Effect) {
-        when(effect) {
+        when (effect) {
             is GenresViewModel.Effect.OpenGenreDetail -> {
                 startActivity(
                     exploreNavigator.getGenreDetailIntent(this, effect.intentParam)
@@ -45,5 +44,4 @@ class GenresActivity: BaseVMComposeActivity<GenresViewModel.Intent,
             }
         }
     }
-
 }

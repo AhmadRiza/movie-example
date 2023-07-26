@@ -6,10 +6,10 @@ package com.riza.example.explore.genredetail.state
 
 sealed interface GenreDetailItemModel {
 
-    object ErrorMore: GenreDetailItemModel
-    object InitialShimmer: GenreDetailItemModel
-    object InitialError: GenreDetailItemModel
-    object LoadMore: GenreDetailItemModel
+    object ErrorMore : GenreDetailItemModel
+    object InitialShimmer : GenreDetailItemModel
+    object InitialError : GenreDetailItemModel
+    object LoadMore : GenreDetailItemModel
 
     data class Movie(
         val id: Int,
@@ -17,5 +17,5 @@ sealed interface GenreDetailItemModel {
         val title: String,
         val rating: String,
         val releaseDate: String
-    ): GenreDetailItemModel
+    ) : GenreDetailItemModel
 }

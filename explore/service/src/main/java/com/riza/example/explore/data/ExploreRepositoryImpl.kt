@@ -17,12 +17,12 @@ import javax.inject.Inject
  */
 class ExploreRepositoryImpl @Inject constructor(
     private val service: ExploreService
-): ExploreRepository {
+) : ExploreRepository {
     override suspend fun getGenres(): Result<List<GenresEntity.GenreEntity>> {
         val result = safeApiCall {
             service.getGenres().toNetworkResult()
         }
-        return when(result) {
+        return when (result) {
             is NetworkResult.Success.WithData -> Result.Success.WithData(
                 result.value.genres.orEmpty()
             )
@@ -35,7 +35,7 @@ class ExploreRepositoryImpl @Inject constructor(
         val result = safeApiCall {
             service.getMoviesByGenre(page = page, genre = genreId.toString()).toNetworkResult()
         }
-        return when(result) {
+        return when (result) {
             is NetworkResult.Success.WithData -> Result.Success.WithData(
                 result.value
             )
@@ -43,7 +43,4 @@ class ExploreRepositoryImpl @Inject constructor(
             is NetworkResult.Success.EmptyData -> result.toEmptyResult()
         }
     }
-
-
-
 }

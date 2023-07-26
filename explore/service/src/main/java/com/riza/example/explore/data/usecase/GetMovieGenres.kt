@@ -41,5 +41,4 @@ class GetMovieGenres @Inject constructor(
             is Result.Error -> GetGenresResult.Error(result.errorMessage)
         }
     }
-
 }

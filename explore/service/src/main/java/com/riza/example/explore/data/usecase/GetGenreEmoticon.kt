@@ -11,7 +11,7 @@ import javax.inject.Inject
  * Get mapped emoticon from movie genre name
  */
 @ExploreServiceScope
-class GetGenreEmoticon @Inject constructor(): NonSuspendingUseCase<String, String>() {
+class GetGenreEmoticon @Inject constructor() : NonSuspendingUseCase<String, String>() {
 
     override fun build(params: String?): String {
         requireNotNull(params)

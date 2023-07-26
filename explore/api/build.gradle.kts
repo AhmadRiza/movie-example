@@ -7,7 +7,6 @@ plugins {
 
 android {
     namespace = "com.riza.example.explore.api"
-
 }
 
 dependencies {

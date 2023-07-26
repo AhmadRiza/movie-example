@@ -18,9 +18,9 @@ import javax.inject.Inject
  * Created by ahmadriza on 20/07/23.
  */
 class GenreDetailActivity : BaseVMComposeActivity<GenreDetailViewModel.Intent,
-GenreDetailViewModel.State,
-GenreDetailViewModel.Effect,
-GenreDetailViewModel>() {
+    GenreDetailViewModel.State,
+    GenreDetailViewModel.Effect,
+    GenreDetailViewModel>() {
 
     companion object {
         private const val EXTRA_GENRE = "EXTRA_GENRE"
@@ -38,7 +38,7 @@ GenreDetailViewModel>() {
     private val intentParam: GenreDetailIntentParam by lazy {
         intent.parcelable(EXTRA_GENRE)!!
     }
-    
+
     override fun inject() {
         buildAppComponent().inject(this)
     }
@@ -59,11 +59,10 @@ GenreDetailViewModel>() {
     }
 
     override fun renderEffect(effect: GenreDetailViewModel.Effect) {
-        when(effect) {
+        when (effect) {
             is GenreDetailViewModel.Effect.OpenMovieDetail -> {
                 startActivity(detailNavigator.getMovieDetailIntent(this, effect.movieId))
             }
         }
     }
-
 }

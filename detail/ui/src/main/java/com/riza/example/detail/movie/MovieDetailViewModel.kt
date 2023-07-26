@@ -10,12 +10,12 @@ import com.riza.example.detail.data.usecase.GetMovieTrailers
 import com.riza.example.detail.movie.state.MovieDetailItemModel
 import com.riza.example.detail.movie.state.MovieDetailItemModel.Trailers.Success.Video
 import com.riza.example.explore.navigator.GenreDetailIntentParam
+import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
 /**
  * Created by ahmadriza on 21/07/23.
@@ -26,8 +26,8 @@ class MovieDetailViewModel @Inject constructor(
     private val getMovieReviews: GetMovieReviews,
     @IODispatcher private val ioDispatcher: CoroutineDispatcher
 ) : BaseViewModel<MovieDetailViewModel.Intent,
-        MovieDetailViewModel.State,
-        MovieDetailViewModel.Effect>(
+    MovieDetailViewModel.State,
+    MovieDetailViewModel.Effect>(
     State()
 ) {
     data class State(
@@ -41,15 +41,14 @@ class MovieDetailViewModel @Inject constructor(
         object RetryGetDetail : Intent
         object RetryGetTrailer : Intent
 
-        data class OnTrailerClick(val videoId: String): Intent
+        data class OnTrailerClick(val videoId: String) : Intent
 
-        data class OnGenreClick(val genre: MovieDetailItemModel.Detail.Success.Genre): Intent
+        data class OnGenreClick(val genre: MovieDetailItemModel.Detail.Success.Genre) : Intent
     }
 
-
     sealed interface Effect {
-        data class OpenYoutubePlayer(val videoId: String): Effect
-        data class OpenGenreDetail(val intentParam: GenreDetailIntentParam): Effect
+        data class OpenYoutubePlayer(val videoId: String) : Effect
+        data class OpenGenreDetail(val intentParam: GenreDetailIntentParam) : Effect
     }
 
     private var movieId: Int = 0
@@ -98,8 +97,6 @@ class MovieDetailViewModel @Inject constructor(
             loadMovieDetail()
         }
     }
-
-
 
     private fun onRetryLoadMoreReviews() {
         viewModelScope.launch {
@@ -290,5 +287,4 @@ class MovieDetailViewModel @Inject constructor(
             MovieDetailItemModel.ReviewTitle.Loading,
         )
     }
-
 }

@@ -55,7 +55,7 @@ fun GenresScreen(state: State, sendIntent: (GenresViewModel.Intent) -> Unit) {
                 }
             }
         ) { innerPadding ->
-            when(val display = state.displayState) {
+            when (val display = state.displayState) {
                 GenresDisplayState.Loading -> {
                     GenresLoadingContent(modifier = Modifier.padding(innerPadding))
                 }
@@ -76,7 +76,6 @@ fun GenresScreen(state: State, sendIntent: (GenresViewModel.Intent) -> Unit) {
                     )
                 }
             }
-
         }
     }
 }
@@ -126,9 +125,7 @@ private fun GenresSuccessContent(
 
         )
     }
-
 }
-
 
 @Preview
 @Composable

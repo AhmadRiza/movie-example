@@ -29,4 +29,3 @@ data class AuthorDetailsEntity(
     val avatarPath: String?,
     val rating: Int?
 )
-

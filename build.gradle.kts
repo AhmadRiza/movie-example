@@ -61,7 +61,6 @@ dependencyLocking {
     lockAllConfigurations()
 }
 
-
 // Setup Gradle Doctor
 doctor {
     warnWhenJetifierEnabled.set(true)

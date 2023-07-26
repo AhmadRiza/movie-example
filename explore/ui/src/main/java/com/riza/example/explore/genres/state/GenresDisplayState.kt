@@ -10,4 +10,3 @@ sealed interface GenresDisplayState {
     object Loading : GenresDisplayState
     object ErrorLoadGenres : GenresDisplayState
 }
-    

@@ -7,11 +7,10 @@ import com.riza.example.explore.data.model.Genre
 import com.riza.example.explore.data.usecase.GetMovieGenres
 import com.riza.example.explore.genres.state.GenresDisplayState
 import com.riza.example.explore.navigator.GenreDetailIntentParam
+import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
 /**
  * Created by ahmadriza on 18/07/23.
@@ -19,26 +18,25 @@ import javax.inject.Inject
 class GenresViewModel @Inject constructor(
     private val getMovieGenres: GetMovieGenres,
     @IODispatcher private val ioDispatcher: CoroutineDispatcher
-): BaseViewModel<GenresViewModel.Intent, GenresViewModel.State, GenresViewModel.Effect>(
+) : BaseViewModel<GenresViewModel.Intent, GenresViewModel.State, GenresViewModel.Effect>(
     State()
 ) {
-    data class State (
+    data class State(
         val displayState: GenresDisplayState = GenresDisplayState.Loading
     )
 
     sealed interface Intent {
-        object OnViewCreated: Intent
-        object OnTryAgain: Intent
-        data class OnGenreClick(val genre: Genre): Intent
+        object OnViewCreated : Intent
+        object OnTryAgain : Intent
+        data class OnGenreClick(val genre: Genre) : Intent
     }
 
-
     sealed interface Effect {
-        data class OpenGenreDetail(val intentParam: GenreDetailIntentParam): Effect
+        data class OpenGenreDetail(val intentParam: GenreDetailIntentParam) : Effect
     }
 
     override fun onIntentReceived(intent: Intent) {
-        when(intent) {
+        when (intent) {
             Intent.OnViewCreated -> onViewCreated()
             is Intent.OnGenreClick -> onGenreClick(intent.genre)
             Intent.OnTryAgain -> onTryAgain()

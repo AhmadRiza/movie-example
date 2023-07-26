@@ -19,4 +19,3 @@ data class TrailerEntity(
     val publishedAt: String?,
     val id: String?
 )
-

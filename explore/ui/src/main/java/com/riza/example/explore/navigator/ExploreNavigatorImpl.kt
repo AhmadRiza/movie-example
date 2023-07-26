@@ -9,7 +9,7 @@ import javax.inject.Inject
 /**
  * Created by ahmadriza on 18/07/23.
  */
-class ExploreNavigatorImpl @Inject constructor(): ExploreNavigator {
+class ExploreNavigatorImpl @Inject constructor() : ExploreNavigator {
     override fun getGenresIntent(context: Context): Intent {
         return Intent(context, GenresActivity::class.java)
     }

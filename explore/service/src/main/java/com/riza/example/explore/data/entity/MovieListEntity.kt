@@ -30,4 +30,3 @@ data class MovieListEntity(
         val voteCount: Int?
     )
 }
-

@@ -56,7 +56,6 @@ class GetMoviesByGenre @Inject constructor(
         }
     }
 
-
     private fun MovieListEntity.toResult(): GetMoviesByGenreResult.Success {
         return GetMoviesByGenreResult.Success(
             currentPage = page ?: 0,
@@ -87,6 +86,4 @@ class GetMoviesByGenre @Inject constructor(
             }
         )
     }
-
-
 }

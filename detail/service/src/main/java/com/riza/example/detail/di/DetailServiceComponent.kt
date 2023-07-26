@@ -7,7 +7,6 @@ import com.riza.example.detail.data.usecase.GetMovieTrailers
 import com.riza.example.network.NetworkComponent
 import dagger.Component
 
-
 @DetailServiceScope
 @Component(
     modules = [

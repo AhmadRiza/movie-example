@@ -63,7 +63,7 @@ barista = "4.2.0"
 kotest = "5.4.2"
 
 # Code Analysis
-ktlintGradle = "10.3.0"
+ktlintGradle = "11.5.0"
 detekt = "1.21.0"
 
 # Code Coverage

@@ -24,5 +24,4 @@ interface DetailService {
         @Path("id") movieId: Int,
         @Query("page") page: Int
     ): Response<MovieReviewDataEntity>
-
 }

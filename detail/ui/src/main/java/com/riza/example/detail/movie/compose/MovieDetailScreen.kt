@@ -230,7 +230,6 @@ fun MovieDetailScreen(
     }
 }
 
-
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun MovieDetailRow(
@@ -296,7 +295,6 @@ fun MovieDetailRow(
             )
         }
     }
-
 }
 
 @Composable
@@ -327,9 +325,7 @@ fun MovieTrailersSection(
                     }
                 )
             }
-
         }
-
     }
 }
 
@@ -348,7 +344,6 @@ fun MovieOverviewSection(model: MovieDetailItemModel.Overview.Success) {
             text = model.overview,
             style = MaterialTheme.typography.bodyMedium
         )
-
     }
 }
 
@@ -395,7 +390,6 @@ fun MovieTrailersRow(
             text = trailer.title,
             style = MaterialTheme.typography.labelMedium,
         )
-
     }
 }
 
@@ -451,9 +445,7 @@ fun ReviewRow(review: MovieDetailItemModel.Review) {
                 text = review.description,
                 style = MaterialTheme.typography.bodyMedium
             )
-
         }
-
     }
 }
 
@@ -466,7 +458,6 @@ private fun Star(enabled: Boolean) {
         contentDescription = null
     )
 }
-
 
 @Preview
 @Composable
@@ -510,9 +501,7 @@ private fun Preview() {
         onBackPress = {},
         sendIntent = {}
     )
-
 }
-
 
 @Preview(showBackground = true)
 @Composable
@@ -536,9 +525,7 @@ private fun LoadMoreReviewRow(onTryAgain: () -> Unit = {}) {
             ),
             modifier = Modifier.fillMaxWidth()
         )
-
     }
-
 }
 
 @Preview(showBackground = true)
@@ -560,16 +547,15 @@ fun ErrorRow(context: String = "", onRetry: () -> Unit = {}) {
             Text(text = "Try again")
         }
     }
-
 }
-
 
 @Preview
 @Composable
 fun MovieDetailShimmer() {
     Row(
         modifier = Modifier.padding(16.dp),
-        horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+        horizontalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
 
         Spacer(
             modifier = Modifier
@@ -617,6 +603,5 @@ fun MovieDetailShimmer() {
                     .shimmering()
             )
         }
-
     }
 }

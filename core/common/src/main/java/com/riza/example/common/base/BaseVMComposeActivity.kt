@@ -10,7 +10,7 @@ import javax.inject.Inject
 import kotlinx.coroutines.launch
 
 abstract class BaseVMComposeActivity
-<Intent, State, Effect, VM : com.riza.example.common.base.BaseViewModel<Intent, State, Effect>> : AppCompatActivity() {
+<Intent, State, Effect, VM : BaseViewModel<Intent, State, Effect>> : AppCompatActivity() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory

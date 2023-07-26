@@ -18,13 +18,13 @@ import javax.inject.Inject
  */
 class DetailRepositoryImpl @Inject constructor(
     private val service: DetailService
-): DetailRepository {
+) : DetailRepository {
 
     override suspend fun getMovieDetal(movieId: Int): Result<MovieDataEntity> {
         val result = safeApiCall {
             service.getMovieDetail(movieId).toNetworkResult()
         }
-        return when(result) {
+        return when (result) {
             is NetworkResult.Success.WithData -> Result.Success.WithData(
                 result.value
             )
@@ -37,7 +37,7 @@ class DetailRepositoryImpl @Inject constructor(
         val result = safeApiCall {
             service.getMovieReviews(movieId = movieId, page = page).toNetworkResult()
         }
-        return when(result) {
+        return when (result) {
             is NetworkResult.Success.WithData -> Result.Success.WithData(
                 result.value
             )
@@ -50,7 +50,7 @@ class DetailRepositoryImpl @Inject constructor(
         val result = safeApiCall {
             service.getMovieTrailers(movieId).toNetworkResult()
         }
-        return when(result) {
+        return when (result) {
             is NetworkResult.Success.WithData -> Result.Success.WithData(
                 result.value
             )
@@ -58,6 +58,4 @@ class DetailRepositoryImpl @Inject constructor(
             is NetworkResult.Success.EmptyData -> result.toEmptyResult()
         }
     }
-
-
 }
