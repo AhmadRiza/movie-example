@@ -57,4 +57,10 @@ dependencies {
     implementation(libs.javax.inject)
     implementation(libs.dagger)
     kapt(libs.dagger.compiler)
+
+    // unit test
+    testImplementation(libs.coroutines.test)
+    testImplementation(libs.kotest.runner.junit5)
+    testImplementation(libs.arch.core.testing)
+    testImplementation(libs.mockk)
 }
