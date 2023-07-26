@@ -1,6 +1,8 @@
 package com.riza.example.explore.data.usecase
 
 import com.riza.example.common.base.BaseUseCase
+import com.riza.example.common.date.DateFormat
+import com.riza.example.common.date.DateFormatter
 import com.riza.example.common.model.Result
 import com.riza.example.explore.data.ExploreRepository
 import com.riza.example.explore.data.entity.MovieListEntity
@@ -15,7 +17,8 @@ import javax.inject.Inject
  */
 @ExploreServiceScope
 class GetMoviesByGenre @Inject constructor(
-    private val repository: ExploreRepository
+    private val repository: ExploreRepository,
+    private val dateFormatter: DateFormatter
 ) : BaseUseCase<GetMoviesByGenreResult, GetMoviesByGenre.Params>() {
 
     data class Params(
@@ -60,6 +63,11 @@ class GetMoviesByGenre @Inject constructor(
             totalPage = totalPages ?: 0,
             totalResult = totalResults ?: 0,
             movies = results.orEmpty().map {
+                val formattedDate = dateFormatter.getFormattedDateOrEmpty(
+                    date = it.releaseDate.orEmpty(),
+                    originFormat = DateFormat.YEAR_MONTH_DAY_DASH,
+                    targetFormat = DateFormat.MONTH_YEAR
+                )
                 MovieItem(
                     adult = it.adult ?: false,
                     backdropPath = it.backdropPath?.toTmdbImageUrl().orEmpty(),
@@ -70,7 +78,7 @@ class GetMoviesByGenre @Inject constructor(
                     overview = it.overview.orEmpty(),
                     popularity = it.popularity ?: 0.0,
                     posterPath = it.posterPath?.toTmdbImageUrl().orEmpty(),
-                    releaseDate = it.releaseDate.orEmpty(),
+                    releaseDate = formattedDate,
                     title = it.title.orEmpty(),
                     video = it.video ?: false,
                     voteAverage = it.voteAverage ?: 0.0,
